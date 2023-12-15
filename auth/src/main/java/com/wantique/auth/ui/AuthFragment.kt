@@ -5,15 +5,11 @@ import android.content.Context
 import android.content.IntentSender
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.ViewCompat
 import androidx.core.view.updatePadding
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
@@ -25,12 +21,11 @@ import com.google.firebase.ktx.Firebase
 import com.wantique.auth.BuildConfig
 import com.wantique.auth.R
 import com.wantique.auth.databinding.FragmentAuthBinding
+import com.wantique.base.ui.BaseFragment
 import kotlinx.coroutines.launch
 
-class AuthFragment : Fragment() {
+class AuthFragment : BaseFragment<FragmentAuthBinding>(R.layout.fragment_auth) {
     private val TAG = "AuthFragmentTag"
-    private var _binding: FragmentAuthBinding? = null
-    private val binding get() = _binding!!
 
     private lateinit var oneTapClient: SignInClient
     private lateinit var signInRequest: BeginSignInRequest
@@ -48,15 +43,6 @@ class AuthFragment : Fragment() {
                 Log.d(TAG, e.localizedMessage.toString())
             }
         }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        // Inflate the layout for this fragment
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_auth, container, false)
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -112,7 +98,6 @@ class AuthFragment : Fragment() {
         val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
         Firebase.auth.signInWithCredential(firebaseCredential).addOnCompleteListener { task ->
             if(task.isSuccessful) {
-                Log.d(TAG, "uid: ${Firebase.auth.uid.toString()}")
                 setUpPreferences()
             }
         }
@@ -124,6 +109,8 @@ class AuthFragment : Fragment() {
                 .edit()
                 .putBoolean("SIGN_IN", true)
                 .apply()
+
+            navigator.navigateToContent()
         }
     }
 }

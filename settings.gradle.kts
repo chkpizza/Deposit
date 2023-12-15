@@ -17,3 +17,4 @@ rootProject.name = "Deposit"
 include(":app")
 include(":auth")
 include(":home")
+include(":base")

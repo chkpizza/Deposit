@@ -1,22 +1,18 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("com.google.gms.google-services")
-    id ("kotlin-kapt")
+    id("kotlin-kapt")
 }
 
 android {
-    namespace = "com.wantique.deposit"
+    namespace = "com.wantique.base"
     compileSdk = Version.compileSdk
 
     defaultConfig {
-        applicationId = "com.wantique.deposit"
         minSdk = Version.minSdk
-        targetSdk = Version.targetSdk
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -41,14 +37,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":auth"))
-    implementation(project(":home"))
-    implementation(project(":base"))
 
     implementation(AndroidX.CORE)
     implementation(AndroidX.APP_COMAPT)
     implementation(Google.MATERIAL)
-    implementation(AndroidX.CONSTRAINT_LAYOUT)
     testImplementation(AndroidTest.JUNIT)
     androidTestImplementation(AndroidTest.EXT_JUNIT)
     androidTestImplementation(AndroidTest.ESPRESSO_CORE)

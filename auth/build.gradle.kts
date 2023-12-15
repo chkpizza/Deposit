@@ -46,6 +46,7 @@ fun getGoogleWebClientId(propertyKey: String): String {
 }
 
 dependencies {
+    implementation(project(":base"))
 
     implementation(AndroidX.CORE)
     implementation(AndroidX.APP_COMAPT)

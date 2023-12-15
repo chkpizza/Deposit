@@ -1,35 +1,20 @@
 package com.wantique.deposit
 
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
-import androidx.core.view.WindowCompat
-import androidx.databinding.DataBindingUtil
+import android.util.Log
 import androidx.navigation.fragment.NavHostFragment
+import com.wantique.base.navigation.Navigator
+import com.wantique.base.navigation.NavigatorProvider
+import com.wantique.base.ui.BaseActivity
 import com.wantique.deposit.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main), NavigatorProvider {
     private val navController by lazy { (supportFragmentManager.findFragmentById(R.id.main_fragment_container) as NavHostFragment).navController }
+    private val appNavigator by lazy { NavigatorImpl.getInstance(navController) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
-        wideToEdge()
         setUpNavGraph()
-    }
-
-    private fun wideToEdge() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            WindowCompat.setDecorFitsSystemWindows(window, false)
-        } else {
-            binding.root.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-        }
     }
 
     private fun setUpNavGraph() {
@@ -41,4 +26,6 @@ class MainActivity : AppCompatActivity() {
         }
         navController.graph = navGraph
     }
+
+    override fun getNavigator() = appNavigator
 }
