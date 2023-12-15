@@ -35,8 +35,7 @@ class MainActivity : AppCompatActivity() {
     private fun setUpNavGraph() {
         val navGraph = navController.navInflater.inflate(R.navigation.app_nav_graph)
         if(getPreferences(MODE_PRIVATE).getBoolean("SIGN_IN", false)) {
-            Toast.makeText(this, "미구현", Toast.LENGTH_SHORT).show()
-            navGraph.setStartDestination(R.id.init_nav_graph)
+            navGraph.setStartDestination(R.id.content_nav_graph)
         } else {
             navGraph.setStartDestination(R.id.init_nav_graph)
         }

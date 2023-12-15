@@ -1,6 +1,7 @@
 package com.wantique.auth.ui
 
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.IntentSender
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.ViewCompat
 import androidx.core.view.updatePadding
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
@@ -23,6 +25,7 @@ import com.google.firebase.ktx.Firebase
 import com.wantique.auth.BuildConfig
 import com.wantique.auth.R
 import com.wantique.auth.databinding.FragmentAuthBinding
+import kotlinx.coroutines.launch
 
 class AuthFragment : Fragment() {
     private val TAG = "AuthFragmentTag"
@@ -110,8 +113,17 @@ class AuthFragment : Fragment() {
         Firebase.auth.signInWithCredential(firebaseCredential).addOnCompleteListener { task ->
             if(task.isSuccessful) {
                 Log.d(TAG, "uid: ${Firebase.auth.uid.toString()}")
+                setUpPreferences()
             }
         }
     }
 
+    private fun setUpPreferences() {
+        lifecycleScope.launch {
+            requireActivity().getPreferences(Context.MODE_PRIVATE)
+                .edit()
+                .putBoolean("SIGN_IN", true)
+                .apply()
+        }
+    }
 }
