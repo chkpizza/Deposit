@@ -1,22 +1,22 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("com.google.gms.google-services")
-    id ("kotlin-kapt")
+    id("kotlin-kapt")
 }
 
 android {
-    namespace = "com.wantique.deposit"
+    namespace = "com.wantique.auth"
     compileSdk = Version.compileSdk
 
     defaultConfig {
-        applicationId = "com.wantique.deposit"
         minSdk = Version.minSdk
-        targetSdk = Version.targetSdk
-        versionCode = 1
-        versionName = "1.0"
+
+        buildConfigField("String", "GOOGLE_WEB_CLIENT_ID", getGoogleWebClientId("GOOGLE_WEB_CLIENT_ID"))
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -37,16 +37,19 @@ android {
     }
     buildFeatures {
         dataBinding = true
+        buildConfig = true
     }
 }
 
+fun getGoogleWebClientId(propertyKey: String): String {
+    return gradleLocalProperties(rootDir).getProperty(propertyKey)
+}
+
 dependencies {
-    implementation(project(":auth"))
 
     implementation(AndroidX.CORE)
     implementation(AndroidX.APP_COMAPT)
     implementation(Google.MATERIAL)
-    implementation(AndroidX.CONSTRAINT_LAYOUT)
     testImplementation(AndroidTest.JUNIT)
     androidTestImplementation(AndroidTest.EXT_JUNIT)
     androidTestImplementation(AndroidTest.ESPRESSO_CORE)
@@ -54,4 +57,9 @@ dependencies {
     implementation(AndroidX.NAVIGATION_FRAGMENT)
     implementation(ThirdParty.DAGGER)
     kapt(ThirdParty.DAGGER_COMPILER)
+
+    implementation(platform(Firebase.FIREBASE_BOM))
+    implementation(Firebase.FIREBASE_ANALYTICS)
+    implementation(Firebase.FIREBASE_AUTH)
+    implementation(Google.PLAY_SERVICE_AUTH)
 }

@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Deposit"
 include(":app")
- 
+include(":auth")
