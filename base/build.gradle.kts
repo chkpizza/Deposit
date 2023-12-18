@@ -48,4 +48,5 @@ dependencies {
     implementation(AndroidX.NAVIGATION_FRAGMENT)
     implementation(ThirdParty.DAGGER)
     kapt(ThirdParty.DAGGER_COMPILER)
+    implementation(ThirdParty.GLIDE)
 }
