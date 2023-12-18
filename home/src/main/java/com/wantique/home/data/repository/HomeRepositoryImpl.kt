@@ -19,9 +19,28 @@ import javax.inject.Inject
 class HomeRepositoryImpl @Inject constructor(
     private val dispatcher: CoroutineDispatcher
 ) : HomeRepository {
+    suspend fun registerDeposit() {
+        /*
+        Firebase.firestore.collection("deposit").document("highest").set(
+            DepositsDto("은행별 최고 금리 예금 상품", listOf(
+                DepositDto("https://image.xportsnews.com/contents/images/upload/article/2023/0310/mb_1678433961946948.jpg", "KB Star 정기예금", "2.94", "4.00"),
+                DepositDto("https://image.xportsnews.com/contents/images/upload/article/2023/0310/mb_1678433961946948.jpg", "NH고향사랑기부예금", "3.10", "3.90"),
+                DepositDto("https://image.xportsnews.com/contents/images/upload/article/2023/0310/mb_1678433961946948.jpg", "신한 My플러스 정기예금", "3.80", "4.00")
+            ))
+        ).await()
+
+         */
+
+        /*
+        Firebase.firestore.collection("deposit").document(System.currentTimeMillis().toString()).set(
+            DepositDto("https://image.xportsnews.com/contents/images/upload/article/2023/0310/mb_1678433961946948.jpg", "NH고향사랑기부예금", "3.90", "3.10"),
+        ).await()
+        */
+    }
+
     override fun getHighestDepositByBank(): Flow<Resource<Deposits>> = flow {
         Firebase.firestore.collection("deposit").orderBy("maximum", Query.Direction.DESCENDING).limit(5).get().await().toObjects<DepositDto>().run {
-            emit(Resource.Success(Deposits("", map { it.asDomain()})))
+            emit(Resource.Success(Deposits("최고 금리 TOP 5", map { it.asDomain()})))
         }
     }
 }
