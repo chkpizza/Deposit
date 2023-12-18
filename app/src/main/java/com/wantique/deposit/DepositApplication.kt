@@ -8,7 +8,7 @@ import com.wantique.home.di.HomeComponent
 import com.wantique.home.di.HomeComponentProvider
 
 class DepositApplication : Application(), AuthComponentProvider, HomeComponentProvider {
-    private val appComponent by lazy { DaggerAppComponent.factory().create() }
+    private val appComponent by lazy { DaggerAppComponent.factory().create(this) }
 
     override fun getAuthComponent(): AuthComponent {
         return appComponent.getAuthComponent().create()

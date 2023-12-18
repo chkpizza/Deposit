@@ -1,8 +1,13 @@
 package com.wantique.auth.ui
 
-import androidx.lifecycle.ViewModel
+import android.content.Context
+import com.wantique.base.network.NetworkStateTracker
+import com.wantique.base.ui.BaseViewModel
 import javax.inject.Inject
 
-class AuthViewModel @Inject constructor() : ViewModel() {
+class AuthViewModel @Inject constructor(
+    networkStateTracker: NetworkStateTracker,
+    context: Context
+) : BaseViewModel(networkStateTracker, context) {
 
 }
