@@ -110,6 +110,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(R.layout.fragment_auth) {
         val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
         Firebase.auth.signInWithCredential(firebaseCredential).addOnCompleteListener { task ->
             if(task.isSuccessful) {
+                viewModel.isValidUser()
                 setUpPreferences()
             }
         }
