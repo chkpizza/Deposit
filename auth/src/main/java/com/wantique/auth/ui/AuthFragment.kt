@@ -10,8 +10,11 @@ import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.ViewCompat
 import androidx.core.view.updatePadding
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.navGraphViewModels
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
@@ -25,6 +28,7 @@ import com.wantique.auth.R
 import com.wantique.auth.databinding.FragmentAuthBinding
 import com.wantique.auth.di.AuthComponentProvider
 import com.wantique.base.ui.BaseFragment
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -63,6 +67,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(R.layout.fragment_auth) {
         setupInsets()
         setUpGoogleSignIn()
         setUpViewListener()
+        setUpNavigateObserver()
     }
 
     private fun setupInsets() {
@@ -111,7 +116,6 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(R.layout.fragment_auth) {
         Firebase.auth.signInWithCredential(firebaseCredential).addOnCompleteListener { task ->
             if(task.isSuccessful) {
                 viewModel.isValidUser()
-                setUpPreferences()
             }
         }
     }
@@ -124,6 +128,16 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(R.layout.fragment_auth) {
                 .apply()
 
             navigator.navigateToContent()
+        }
+    }
+
+    private fun setUpNavigateObserver() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.navigateToHome.collect {
+                    setUpPreferences()
+                }
+            }
         }
     }
 }

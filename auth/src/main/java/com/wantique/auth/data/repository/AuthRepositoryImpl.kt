@@ -21,7 +21,16 @@ class AuthRepositoryImpl @Inject constructor(
 ) : AuthRepository {
     override fun isExistUser(): Flow<Resource<User>> = flow {
         Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).get().await().toObject<UserDto>()?.let {
-            emit(Resource.Success(User(it.uid)))
+            emit(Resource.Success(it.asDomain()))
+        } ?: run {
+            emit(Resource.Error(UserNotFoundException()))
+        }
+    }
+
+    override fun registerUser(): Flow<Resource<User>> = flow {
+        Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).set(UserDto(Firebase.auth.uid.toString(), System.currentTimeMillis().toString())).await()
+        Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).get().await().toObject<UserDto>()?.let {
+            emit(Resource.Success(it.asDomain()))
         } ?: run {
             emit(Resource.Error(UserNotFoundException()))
         }
