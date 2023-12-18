@@ -10,7 +10,9 @@ import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.ViewCompat
 import androidx.core.view.updatePadding
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.navGraphViewModels
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
@@ -21,10 +23,15 @@ import com.google.firebase.ktx.Firebase
 import com.wantique.auth.BuildConfig
 import com.wantique.auth.R
 import com.wantique.auth.databinding.FragmentAuthBinding
+import com.wantique.auth.di.AuthComponentProvider
 import com.wantique.base.ui.BaseFragment
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class AuthFragment : BaseFragment<FragmentAuthBinding>(R.layout.fragment_auth) {
+    @Inject lateinit var factory: ViewModelProvider.Factory
+    private val viewModel by navGraphViewModels<AuthViewModel>(R.id.auth_nav_graph) { factory }
+
     private val TAG = "AuthFragmentTag"
 
     private lateinit var oneTapClient: SignInClient
@@ -43,6 +50,11 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(R.layout.fragment_auth) {
                 Log.d(TAG, e.localizedMessage.toString())
             }
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (context.applicationContext as AuthComponentProvider).getAuthComponent().inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
