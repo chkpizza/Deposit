@@ -6,7 +6,7 @@
 
         <variable
             name="model"
-            type="com.wantique.home.domain.model.Deposits" />
+            type="com.wantique.home.ui.model.Deposits" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

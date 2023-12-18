@@ -2,14 +2,15 @@ package com.wantique.home.domain.model
 
 import com.wantique.base.ui.SimpleModel
 import com.wantique.base.ui.SimpleSubmittableState
-import com.wantique.home.BR
-import com.wantique.home.R
+import com.wantique.home.ui.model.Deposits
 
-data class Deposits<ITEM: SimpleModel> (
+data class Deposits (
     val title: String,
-    val simpleSubmittableState: SimpleSubmittableState<ITEM>,
-) : SimpleModel {
-    override fun layoutId(): Int = R.layout.view_holder_deposit_horizontal
-
-    override fun bindingVariableId(): Int? = BR.model
+    val deposits: List<Deposit>,
+) {
+    fun asUi(): Deposits<SimpleModel> {
+        return Deposits(title, SimpleSubmittableState<SimpleModel>().apply {
+            submitList(deposits.map { it.asUi() })
+        })
+    }
 }

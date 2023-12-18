@@ -5,7 +5,7 @@
     <data>
         <variable
             name="model"
-            type="com.wantique.home.domain.model.Deposit" />
+            type="com.wantique.home.ui.model.Deposit" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

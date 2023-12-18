@@ -30,7 +30,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
         setupInsets()
 
-        viewModel.test()
+        viewModel.getDepositByBank()
     }
 
     private fun setupInsets() {

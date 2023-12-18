@@ -1,16 +1,14 @@
 package com.wantique.home.domain.model
 
-import com.wantique.base.ui.SimpleModel
-import com.wantique.home.BR
-import com.wantique.home.R
+import com.wantique.home.ui.model.Deposit
 
 data class Deposit(
     val icon: String,
     val title: String,
     val maximum: String,
-    val minimum: String
-) : SimpleModel {
-    override fun layoutId(): Int = R.layout.view_holder_deposit
-
-    override fun bindingVariableId(): Int? = BR.model
+    val minimum: String,
+) {
+    fun asUi(): Deposit {
+        return Deposit(icon, title, maximum, minimum)
+    }
 }
