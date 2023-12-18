@@ -3,6 +3,8 @@ package com.wantique.home.ui
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.ViewCompat
+import androidx.core.view.updatePadding
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.navGraphViewModels
 import com.wantique.base.ui.BaseFragment
@@ -22,5 +24,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.vm = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
+        setupInsets()
+
+        viewModel.test()
+    }
+
+    private fun setupInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+            view.updatePadding(
+                top = insets.systemWindowInsets.top,
+                bottom = insets.systemWindowInsets.bottom
+            )
+            insets
+        }
     }
 }
