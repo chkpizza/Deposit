@@ -1,6 +1,5 @@
 package com.wantique.home.data.model
 
-import com.wantique.home.domain.model.Deposit
 import com.wantique.home.domain.model.Deposits
 
 data class DepositsDto(

@@ -1,7 +1,6 @@
 package com.wantique.home.ui
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.wantique.base.network.NetworkStateTracker
 import com.wantique.base.ui.BaseViewModel
@@ -9,18 +8,20 @@ import com.wantique.base.ui.SimpleModel
 import com.wantique.base.ui.SimpleSubmittableState
 import com.wantique.base.ui.getValue
 import com.wantique.base.ui.isErrorOrNull
+import com.wantique.home.domain.usecase.GetAllDepositProductUseCase
 import com.wantique.home.domain.usecase.GetHighestDepositByBankUseCase
 import com.wantique.home.domain.usecase.GetHomeBannerUseCase
 import com.wantique.home.ui.model.Banner
 import com.wantique.home.ui.model.Banners
-import com.wantique.home.ui.model.Deposit
-import com.wantique.home.ui.model.Deposits
+import com.wantique.home.ui.model.DepositNormal
+import com.wantique.home.ui.model.DepositSmall
+import com.wantique.home.ui.model.DepositsHorizontal
+import com.wantique.home.ui.model.DepositsVertical
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,20 +29,22 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getHighestDepositByBankUseCase: GetHighestDepositByBankUseCase,
     private val getHomeBannerUseCase: GetHomeBannerUseCase,
+    private val getAllDepositProductUseCase: GetAllDepositProductUseCase,
     networkStateTracker: NetworkStateTracker,
     context: Context
 ) : BaseViewModel(networkStateTracker, context) {
     private val _home = MutableStateFlow<SimpleSubmittableState<SimpleModel>?>(null)
     val home = _home.asStateFlow()
 
-    private val _navigateToBanner = MutableSharedFlow<Banner>()
+    private val _navigateToBanner = MutableSharedFlow<SimpleModel>()
     val navigateToBanner = _navigateToBanner.asSharedFlow()
 
-    private val _navigateToDeposit = MutableSharedFlow<Deposit>()
+    private val _navigateToDeposit = MutableSharedFlow<SimpleModel>()
     val navigateToDeposit = _navigateToDeposit.asSharedFlow()
 
-    private lateinit var deposits: Deposits<SimpleModel>
+    private lateinit var summary: DepositsHorizontal<SimpleModel>
     private lateinit var banners: Banners<SimpleModel>
+    private lateinit var depositsHorizontal: DepositsVertical<SimpleModel>
 
     fun load() {
         if(isInitialized()) {
@@ -50,6 +53,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             getHighestDeposit()
             getHomeBanner()
+            getAllDepositProduct()
         }
     }
 
@@ -64,13 +68,13 @@ class HomeViewModel @Inject constructor(
             it.isErrorOrNull()?.let {
 
             } ?: run {
-                deposits = Deposits(it.getValue().title, SimpleSubmittableState<SimpleModel>().apply {
+                summary = DepositsHorizontal(it.getValue().title, SimpleSubmittableState<SimpleModel>().apply {
                     submitList(it.getValue().deposits.map { deposit ->
-                        Deposit(deposit.bankCode, deposit.icon, deposit.title, deposit.description, deposit.maximum, deposit.minimum, ::onDepositClickListener)
+                        DepositSmall(deposit.bankCode, deposit.icon, deposit.title, deposit.description, deposit.maximum, deposit.minimum, ::onDepositClickListener)
                     })
                 })
 
-                merge(deposits)
+                merge(summary)
             }
         }.collect()
     }
@@ -93,6 +97,24 @@ class HomeViewModel @Inject constructor(
         }.collect()
     }
 
+    private suspend fun getAllDepositProduct() {
+        safeFlow {
+            getAllDepositProductUseCase()
+        }.onEach {
+            it.isErrorOrNull()?.let {
+
+            } ?: run {
+                depositsHorizontal = DepositsVertical(it.getValue().title, SimpleSubmittableState<SimpleModel>().apply {
+                    submitList(it.getValue().deposits.map { deposit ->
+                        DepositNormal(deposit.bankCode, deposit.icon, deposit.title, deposit.description, deposit.maximum, deposit.minimum, :: onDepositClickListener)
+                    })
+                })
+
+                merge(depositsHorizontal)
+            }
+        }.collect()
+    }
+
     private fun merge(model: SimpleModel) {
         _home.value?.let {
             it.submitList(it.getCurrentList().toMutableList().apply {
@@ -105,13 +127,13 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun onBannerClickListener(model: Banner) {
+    private fun onBannerClickListener(model: SimpleModel) {
         viewModelScope.launch {
             _navigateToBanner.emit(model)
         }
     }
 
-    private fun onDepositClickListener(model: Deposit) {
+    private fun onDepositClickListener(model: SimpleModel) {
         viewModelScope.launch {
             _navigateToDeposit.emit(model)
         }

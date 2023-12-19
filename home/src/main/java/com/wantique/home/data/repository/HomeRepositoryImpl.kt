@@ -2,7 +2,6 @@ package com.wantique.home.data.repository
 
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.toObject
 import com.google.firebase.firestore.toObjects
 import com.google.firebase.ktx.Firebase
 import com.wantique.base.network.Resource
@@ -10,7 +9,6 @@ import com.wantique.home.data.model.BannerDto
 import com.wantique.home.data.model.BannersDto
 import com.wantique.home.data.model.DepositDto
 import com.wantique.home.data.model.DepositsDto
-import com.wantique.home.domain.model.Deposits
 import com.wantique.home.domain.repository.HomeRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -49,6 +47,16 @@ class HomeRepositoryImpl @Inject constructor(
                 emit(Resource.Error(Throwable("EMPTY_BANNER")))
             } else {
                 emit(Resource.Success(BannersDto(this)))
+            }
+        }
+    }
+
+    override fun getAllDepositProduct(): Flow<Resource<DepositsDto>> = flow {
+        Firebase.firestore.collection("bank").document("deposit").collection("summary").get().await().toObjects<DepositDto>().run {
+            if(isEmpty()) {
+                emit(Resource.Error(Throwable("EMPTY_PRODUCT")))
+            } else {
+                emit(Resource.Success(DepositsDto("등록된 예금 상품", this)))
             }
         }
     }
