@@ -65,8 +65,8 @@ class HomeViewModel @Inject constructor(
         safeFlow {
             getHighestDepositByBankUseCase()
         }.onEach {
-            it.isErrorOrNull()?.let {
-
+            it.isErrorOrNull()?.let { e ->
+                _errorState.value = e
             } ?: run {
                 summary = DepositsHorizontal(it.getValue().title, SimpleSubmittableState<SimpleModel>().apply {
                     submitList(it.getValue().deposits.map { deposit ->
@@ -83,8 +83,8 @@ class HomeViewModel @Inject constructor(
         safeFlow {
             getHomeBannerUseCase()
         }.onEach {
-            it.isErrorOrNull()?.let {
-
+            it.isErrorOrNull()?.let { e ->
+                _errorState.value = e
             } ?: run {
                 banners = Banners(SimpleSubmittableState<SimpleModel>().apply {
                     submitList(it.getValue().banners.map { banner ->

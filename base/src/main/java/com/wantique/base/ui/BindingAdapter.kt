@@ -1,12 +1,14 @@
 package com.wantique.base.ui
 
 import android.util.Log
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 
 @BindingAdapter("simple_submittable_state")
 fun <T: SimpleModel> RecyclerView.setSimpleSubmittableState(state: SimpleSubmittableState<T>?) {
@@ -56,4 +58,11 @@ fun ViewPager2.setPagerIndicator(indicator: TextView) {
             indicator.text = "${position + 1} / ${adapter?.itemCount}"
         }
     })
+}
+
+@BindingAdapter("error_handler")
+fun ViewGroup.setErrorHandler(e: Throwable?) {
+    e?.let {
+        Snackbar.make(this, e.message.toString(), Snackbar.LENGTH_SHORT).show()
+    }
 }
