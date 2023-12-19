@@ -3,7 +3,7 @@ package com.wantique.deposit.di
 import androidx.lifecycle.ViewModel
 import com.wantique.auth.ui.AuthViewModel
 import com.wantique.base.di.ViewModelKey
-import com.wantique.home.ui.HomeViewModel
+import com.wantique.home.ui.home.HomeViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

@@ -1,4 +1,4 @@
-package com.wantique.home.ui
+package com.wantique.home.ui.home
 
 import android.content.Context
 import androidx.lifecycle.viewModelScope
@@ -11,12 +11,12 @@ import com.wantique.base.ui.isErrorOrNull
 import com.wantique.home.domain.usecase.GetAllDepositProductUseCase
 import com.wantique.home.domain.usecase.GetHighestDepositByBankUseCase
 import com.wantique.home.domain.usecase.GetHomeBannerUseCase
-import com.wantique.home.ui.model.Banner
-import com.wantique.home.ui.model.Banners
-import com.wantique.home.ui.model.DepositNormal
-import com.wantique.home.ui.model.DepositSmall
-import com.wantique.home.ui.model.DepositsHorizontal
-import com.wantique.home.ui.model.DepositsVertical
+import com.wantique.home.ui.home.model.Banner
+import com.wantique.home.ui.home.model.Banners
+import com.wantique.home.ui.home.model.DepositNormal
+import com.wantique.home.ui.home.model.DepositSmall
+import com.wantique.home.ui.home.model.DepositsHorizontal
+import com.wantique.home.ui.home.model.DepositsVertical
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow

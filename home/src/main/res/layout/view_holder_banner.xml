@@ -6,7 +6,7 @@
 
         <variable
             name="model"
-            type="com.wantique.home.ui.model.Banner" />
+            type="com.wantique.home.ui.home.model.Banner" />
 
         <variable
             name="absoluteAdapterPosition"

@@ -7,13 +7,13 @@
 
         <variable
             name="vm"
-            type="com.wantique.home.ui.HomeViewModel" />
+            type="com.wantique.home.ui.home.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.HomeFragment">
+        tools:context=".ui.home.HomeFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/home_main_recycler_view"

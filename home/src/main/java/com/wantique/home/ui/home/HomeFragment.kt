@@ -1,4 +1,4 @@
-package com.wantique.home.ui
+package com.wantique.home.ui.home
 
 import android.content.Context
 import android.os.Bundle

@@ -6,7 +6,7 @@
 
         <variable
             name="model"
-            type="com.wantique.home.ui.model.DepositsHorizontal" />
+            type="com.wantique.home.ui.home.model.DepositsHorizontal" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
