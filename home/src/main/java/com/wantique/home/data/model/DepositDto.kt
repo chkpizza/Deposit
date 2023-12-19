@@ -3,6 +3,7 @@ package com.wantique.home.data.model
 import com.wantique.home.domain.model.Deposit
 
 data class DepositDto(
+    val uid: String? = null,
     val bankCode: Int? = null,
     val icon: String? = null,
     val title: String? = null,
@@ -11,6 +12,6 @@ data class DepositDto(
     val minimum: Double? = null,
 ) {
     fun asDomain(): Deposit {
-        return Deposit(bankCode!!, icon!!, title!!, description!!, maximum!!, minimum!!)
+        return Deposit(uid!!, bankCode!!, icon!!, title!!, description!!, maximum!!, minimum!!)
     }
 }

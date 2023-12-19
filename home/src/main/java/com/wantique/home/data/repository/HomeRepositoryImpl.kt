@@ -26,9 +26,12 @@ class HomeRepositoryImpl @Inject constructor(
         ).await()
          */
 
+        /*
         Firebase.firestore.collection("bank").document("deposit").collection("summary").document("d19b5ea057b17a5b4f6673706203b29a5929ffa635abc67a913030d75069ae66").set(
             DepositDto(3, "", "신한 My플러스 정기예금", "요건 달성 시 우대이자율을 제공하는 정기예금", 4.00, 3.80)
         ).await()
+
+         */
     }
 
     override fun getHighestDepositByBank(): Flow<Resource<DepositsDto>> = flow {

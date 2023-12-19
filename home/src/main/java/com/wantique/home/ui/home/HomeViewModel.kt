@@ -70,7 +70,7 @@ class HomeViewModel @Inject constructor(
             } ?: run {
                 summary = DepositsHorizontal(it.getValue().title, SimpleSubmittableState<SimpleModel>().apply {
                     submitList(it.getValue().deposits.map { deposit ->
-                        DepositSmall(deposit.bankCode, deposit.icon, deposit.title, deposit.description, deposit.maximum, deposit.minimum, ::onDepositClickListener)
+                        DepositSmall(deposit.uid, deposit.bankCode, deposit.icon, deposit.title, deposit.description, deposit.maximum, deposit.minimum, ::onDepositClickListener)
                     })
                 })
 
@@ -106,7 +106,7 @@ class HomeViewModel @Inject constructor(
             } ?: run {
                 depositsHorizontal = DepositsVertical(it.getValue().title, SimpleSubmittableState<SimpleModel>().apply {
                     submitList(it.getValue().deposits.map { deposit ->
-                        DepositNormal(deposit.bankCode, deposit.icon, deposit.title, deposit.description, deposit.maximum, deposit.minimum, :: onDepositClickListener)
+                        DepositNormal(deposit.uid, deposit.bankCode, deposit.icon, deposit.title, deposit.description, deposit.maximum, deposit.minimum, :: onDepositClickListener)
                     })
                 })
 

@@ -9,5 +9,17 @@
         android:id="@+id/homeFragment"
         android:name="com.wantique.home.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_depositFragment"
+            app:destination="@id/depositFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/depositFragment"
+        android:name="com.wantique.home.ui.detail.DepositFragment"
+        android:label="DepositFragment" >
+        <argument
+            android:name="uid"
+            app:argType="string" />
+    </fragment>
 </navigation>

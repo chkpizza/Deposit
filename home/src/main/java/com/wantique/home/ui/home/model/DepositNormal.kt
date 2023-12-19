@@ -5,6 +5,7 @@ import com.wantique.home.BR
 import com.wantique.home.R
 
 data class DepositNormal(
+    val uid: String,
     val bankCode: Int,
     val icon: String,
     val title: String,
