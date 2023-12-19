@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 
 open class BaseViewModel(
     private val networkStateTracker: NetworkStateTracker,
-    private val context: Context
+    context: Context
 ) : ViewModel() {
     protected val _errorState = MutableStateFlow<Throwable?>(null)
     val errorState = _errorState.asStateFlow()
@@ -28,7 +28,7 @@ open class BaseViewModel(
     private lateinit var networkState: NetworkState
 
     init {
-        initializeNetworkState()
+        initializeNetworkState(context)
         trackingNetworkState()
     }
 
@@ -42,7 +42,7 @@ open class BaseViewModel(
     }
 
     @SuppressLint("MissingPermission")
-    private fun initializeNetworkState() {
+    private fun initializeNetworkState(context: Context) {
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
         connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)?.let {
