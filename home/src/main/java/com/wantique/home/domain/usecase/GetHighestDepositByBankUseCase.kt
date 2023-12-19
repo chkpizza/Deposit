@@ -11,7 +11,7 @@ class GetHighestDepositByBankUseCase @Inject constructor(
 ) {
     operator fun invoke() = homeRepository.getHighestDepositByBank().map {
         when(it) {
-            is Resource.Success -> UiState.Success(it.data)
+            is Resource.Success -> UiState.Success(it.data.asDomain())
             is Resource.Error -> UiState.Error(it.error)
         }
     }

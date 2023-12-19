@@ -68,4 +68,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             }
         }
     }
+
+    private fun test() {
+        lifecycleScope.launch {
+            HomeRepositoryImpl(Dispatchers.IO).registerDeposit()
+        }
+    }
 }

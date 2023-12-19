@@ -23,32 +23,23 @@ class HomeRepositoryImpl @Inject constructor(
 ) : HomeRepository {
     suspend fun registerDeposit() {
         /*
-        Firebase.firestore.collection("deposit").document("highest").set(
-            DepositsDto("은행별 최고 금리 예금 상품", listOf(
-                DepositDto("https://image.xportsnews.com/contents/images/upload/article/2023/0310/mb_1678433961946948.jpg", "KB Star 정기예금", "2.94", "4.00"),
-                DepositDto("https://image.xportsnews.com/contents/images/upload/article/2023/0310/mb_1678433961946948.jpg", "NH고향사랑기부예금", "3.10", "3.90"),
-                DepositDto("https://image.xportsnews.com/contents/images/upload/article/2023/0310/mb_1678433961946948.jpg", "신한 My플러스 정기예금", "3.80", "4.00")
-            ))
-        ).await()
-
-         */
-
-        /*
-        Firebase.firestore.collection("deposit").document(System.currentTimeMillis().toString()).set(
-            DepositDto("https://image.xportsnews.com/contents/images/upload/article/2023/0310/mb_1678433961946948.jpg", "NH고향사랑기부예금", "3.90", "3.10"),
-        ).await()
-        */
-
-        /*
         Firebase.firestore.collection("banner").document(System.currentTimeMillis().toString()).set(
             BannerDto("https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2022/05/22/f1c66ccb-f5bf-4382-af54-96ba8f2d3fb5.jpg")
         ).await()
          */
+
+        Firebase.firestore.collection("bank").document("deposit").collection("summary").document("d19b5ea057b17a5b4f6673706203b29a5929ffa635abc67a913030d75069ae66").set(
+            DepositDto(3, "", "신한 My플러스 정기예금", "요건 달성 시 우대이자율을 제공하는 정기예금", 4.00, 3.80)
+        ).await()
     }
 
-    override fun getHighestDepositByBank(): Flow<Resource<Deposits>> = flow {
-        Firebase.firestore.collection("deposit").orderBy("maximum", Query.Direction.DESCENDING).limit(5).get().await().toObjects<DepositDto>().run {
-            emit(Resource.Success(Deposits("최고 금리 TOP 5", map { it.asDomain()})))
+    override fun getHighestDepositByBank(): Flow<Resource<DepositsDto>> = flow {
+        Firebase.firestore.collection("bank").document("deposit").collection("summary").orderBy("maximum", Query.Direction.DESCENDING).limit(5).get().await().toObjects<DepositDto>().run {
+            if(isEmpty()) {
+                emit(Resource.Error(Throwable("EMPTY_PRODUCT")))
+            } else {
+                emit(Resource.Success(DepositsDto("최고 금리 TOP5", this)))
+            }
         }
     }
 

@@ -53,7 +53,7 @@
                 android:id="@+id/deposit_tv_interest_rate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="연 3.15% ~ 3.25%"
+                android:text="@{@string/formatted_interest_rate(model.minimum, model.maximum)}"
                 android:textColor="#707070"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -8,6 +8,6 @@ data class DepositsDto(
     val deposits: List<DepositDto> = emptyList(),
 ) {
     fun asDomain(): Deposits {
-        return Deposits(title, deposits.map { Deposit(it.icon, it.title, it.maximum, it.minimum) })
+        return Deposits(title, deposits.map { it.asDomain() })
     }
 }

@@ -66,7 +66,7 @@ class HomeViewModel @Inject constructor(
             } ?: run {
                 deposits = Deposits(it.getValue().title, SimpleSubmittableState<SimpleModel>().apply {
                     submitList(it.getValue().deposits.map { deposit ->
-                        Deposit(deposit.icon, deposit.title, deposit.maximum, deposit.minimum, ::onDepositClickListener)
+                        Deposit(deposit.bankCode, deposit.icon, deposit.title, deposit.description, deposit.maximum, deposit.minimum, ::onDepositClickListener)
                     })
                 })
 
