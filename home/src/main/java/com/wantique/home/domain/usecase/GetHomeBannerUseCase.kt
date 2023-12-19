@@ -6,12 +6,12 @@ import com.wantique.home.domain.repository.HomeRepository
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class GetHighestDepositByBankUseCase @Inject constructor(
+class GetHomeBannerUseCase @Inject constructor(
     private val homeRepository: HomeRepository
 ) {
-    operator fun invoke() = homeRepository.getHighestDepositByBank().map {
+    operator fun invoke() = homeRepository.getHomeBanner().map {
         when(it) {
-            is Resource.Success -> UiState.Success(it.data)
+            is Resource.Success -> UiState.Success(it.data.asDomain())
             is Resource.Error -> UiState.Error(it.error)
         }
     }

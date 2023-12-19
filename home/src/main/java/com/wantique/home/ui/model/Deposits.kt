@@ -11,5 +11,11 @@ data class Deposits<ITEM: SimpleModel> (
 ) : SimpleModel {
     override fun layoutId(): Int = R.layout.view_holder_deposit_horizontal
 
-    override fun bindingVariableId(): Int? = BR.model
+    override fun bindingVariableIds(): Map<String, Int> {
+        return hashMapOf<String, Int>().apply {
+            put("model", BR.model)
+            put("bindingAdapterPosition", BR.bindingAdapterPosition)
+            put("absoluteAdapterPosition", BR.absoluteAdapterPosition)
+        }
+    }
 }

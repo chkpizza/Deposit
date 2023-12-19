@@ -8,9 +8,16 @@ data class Deposit(
     val icon: String,
     val title: String,
     val maximum: String,
-    val minimum: String
+    val minimum: String,
+    val onClickListener: (Deposit) -> Unit
 ) : SimpleModel {
     override fun layoutId(): Int = R.layout.view_holder_deposit
 
-    override fun bindingVariableId(): Int? = BR.model
+    override fun bindingVariableIds(): Map<String, Int> {
+        return hashMapOf<String, Int>().apply {
+            put("model", BR.model)
+            put("bindingAdapterPosition", BR.bindingAdapterPosition)
+            put("absoluteAdapterPosition", BR.absoluteAdapterPosition)
+        }
+    }
 }

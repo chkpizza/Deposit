@@ -7,11 +7,20 @@
         <variable
             name="model"
             type="com.wantique.home.ui.model.Banner" />
+
+        <variable
+            name="absoluteAdapterPosition"
+            type="Integer" />
+
+        <variable
+            name="bindingAdapterPosition"
+            type="Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:onClick="@{()->model.onClickListener.invoke(model)}">
 
         <ImageView
             android:id="@+id/home_iv_banner"
