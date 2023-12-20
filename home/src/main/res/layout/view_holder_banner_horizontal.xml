@@ -32,24 +32,25 @@
                     android:id="@+id/home_vp_banner"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    app:pager_indicator="@{homeIndicatorBanner}"
                     app:layout_constraintDimensionRatio="2:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:pager_indicator="@{homeTvBannerIndicator}"
                     app:simple_pager_submittable_state="@{model.simpleSubmittableState}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
-        <TextView
-            android:id="@+id/home_tv_banner_indicator"
+        <com.zhpan.indicator.IndicatorView
+            android:id="@+id/home_indicator_banner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="4dp"
+            app:layout_constraintTop_toBottomOf="@id/home_container_banner"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/home_container_banner" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

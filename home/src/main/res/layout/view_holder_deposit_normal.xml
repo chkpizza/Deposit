@@ -23,7 +23,7 @@
                 android:layout_height="36dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
-                app:load_image="@{model.icon}"
+                app:load_bank_icon="@{model.bankCode}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

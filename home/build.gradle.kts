@@ -58,4 +58,5 @@ dependencies {
     implementation(Firebase.FIREBASE_AUTH)
     implementation(Firebase.FIRESTORE)
     implementation(Google.PLAY_SERVICE_AUTH)
+    implementation(ThirdParty.PAGER_INDICATOR)
 }

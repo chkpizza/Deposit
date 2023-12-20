@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="formatted_interest_rate">연 %1$.2f%% ~ %2$.2f%%</string>
 </resources>

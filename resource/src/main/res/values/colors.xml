@@ -3,4 +3,6 @@
     <color name="main_text">#252525</color>
     <color name="sub_text">#707070</color>
     <color name="divider">#f5f5f5</color>
+    <color name="enable_color">#FF935E</color>
+    <color name="disable_color">#EEEDF0</color>
 </resources>

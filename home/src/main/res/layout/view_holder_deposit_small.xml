@@ -27,7 +27,7 @@
                 android:id="@+id/deposit_iv_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                app:load_image="@{model.icon}"
+                app:load_bank_icon="@{model.bankCode}"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:scaleType="centerCrop"
