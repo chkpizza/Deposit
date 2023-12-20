@@ -25,7 +25,6 @@ open class BaseFragment<T: ViewDataBinding>(
         super.onAttach(context)
         (context as NavigatorProvider).also {
             navigator = it.getNavigator()
-            Log.d("navigatorTest", navigator.toString())
         }
     }
 

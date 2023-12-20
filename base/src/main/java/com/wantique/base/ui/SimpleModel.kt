@@ -5,5 +5,5 @@ import androidx.annotation.LayoutRes
 interface SimpleModel {
     @LayoutRes
     fun layoutId(): Int
-    fun bindingVariableId(): Int?
+    fun bindingVariableIds(): Map<String, Int>
 }

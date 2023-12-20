@@ -5,7 +5,7 @@
     <data>
         <variable
             name="model"
-            type="com.wantique.home.domain.model.Deposit" />
+            type="com.wantique.home.ui.home.model.DepositSmall" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -16,7 +16,8 @@
         app:strokeWidth="1dp"
         app:strokeColor="#d9d9d9"
         android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp">
+        android:layout_marginEnd="4dp"
+        android:onClick="@{()->model.onClickListener.invoke(model)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -52,7 +53,7 @@
                 android:id="@+id/deposit_tv_interest_rate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="연 3.15% ~ 3.25%"
+                android:text="@{@string/formatted_interest_rate(model.minimum, model.maximum)}"
                 android:textColor="#707070"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -2,17 +2,21 @@ package com.wantique.base.ui
 
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
-import com.wantique.base.BR
 
 class SimpleAutoBindingViewHolder(
-    private val bindingVariableId: Int?,
+    private val bindingVariableIds: Map<String, Int>,
     layoutId: Int,
     parent: ViewGroup
 ) : SimpleViewHolder<ViewDataBinding, SimpleModel>(layoutId, parent) {
     override fun onBid(model: SimpleModel) {
-        bindingVariableId?.let {
-            binding.setVariable(it, model)
+        bindingVariableIds.forEach { key, value ->
+            when(key) {
+                "model" -> binding.setVariable(value, model)
+                "bindingAdapterPosition" -> binding.setVariable(value, bindingAdapterPosition)
+                "absoluteAdapterPosition" -> binding.setVariable(value, absoluteAdapterPosition)
+            }
         }
+
         binding.executePendingBindings()
     }
 }

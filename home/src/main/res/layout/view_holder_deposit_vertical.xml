@@ -3,10 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="model"
-            type="com.wantique.home.ui.home.model.DepositsHorizontal" />
+            type="com.wantique.home.ui.home.model.DepositsVertical" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,19 +30,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/deposit_rv_horizontal"
+            android:id="@+id/deposit_rv_vertical"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:clipToPadding="false"
-            android:orientation="horizontal"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/deposit_tv_title"
-            app:simple_submittable_state="@{model.simpleSubmittableState}" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
+            app:simple_submittable_state="@{model.simpleSubmittableState}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
