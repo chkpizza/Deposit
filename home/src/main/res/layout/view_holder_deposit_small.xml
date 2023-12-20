@@ -44,7 +44,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:textSize="13sp"
-                android:textColor="#252525"
+                android:textColor="@color/main_text"
                 android:layout_marginTop="4dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp" />
@@ -54,7 +54,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@{@string/formatted_interest_rate(model.minimum, model.maximum)}"
-                android:textColor="#707070"
+                android:textColor="@color/sub_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"

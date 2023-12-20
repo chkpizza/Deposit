@@ -4,12 +4,14 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.toObjects
 import com.google.firebase.ktx.Firebase
+import com.wantique.base.exception.EmptyListException
 import com.wantique.base.network.Resource
 import com.wantique.home.data.model.BannerDto
 import com.wantique.home.data.model.BannersDto
 import com.wantique.home.data.model.DepositDto
 import com.wantique.home.data.model.DepositsDto
 import com.wantique.home.domain.repository.HomeRepository
+import com.wantique.resource.Constant
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -35,9 +37,9 @@ class HomeRepositoryImpl @Inject constructor(
     }
 
     override fun getHighestDepositByBank(): Flow<Resource<DepositsDto>> = flow {
-        Firebase.firestore.collection("bank").document("deposit").collection("summary").orderBy("maximum", Query.Direction.DESCENDING).limit(5).get().await().toObjects<DepositDto>().run {
+        Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_DOCUMENT).collection(Constant.SUMMARY_COLLECTION).orderBy("maximum", Query.Direction.DESCENDING).limit(5).get().await().toObjects<DepositDto>().run {
             if(isEmpty()) {
-                emit(Resource.Error(Throwable("EMPTY_PRODUCT")))
+                emit(Resource.Error(EmptyListException()))
             } else {
                 emit(Resource.Success(DepositsDto("최고 금리 TOP5", this)))
             }
@@ -45,9 +47,9 @@ class HomeRepositoryImpl @Inject constructor(
     }
 
     override fun getHomeBanner(): Flow<Resource<BannersDto>> = flow {
-        Firebase.firestore.collection("banner").get().await().toObjects<BannerDto>().run {
+        Firebase.firestore.collection(Constant.BANNER_COLLECTION).get().await().toObjects<BannerDto>().run {
             if(isEmpty()) {
-                emit(Resource.Error(Throwable("EMPTY_BANNER")))
+                emit(Resource.Error(EmptyListException()))
             } else {
                 emit(Resource.Success(BannersDto(this)))
             }
@@ -55,9 +57,9 @@ class HomeRepositoryImpl @Inject constructor(
     }
 
     override fun getAllDepositProduct(): Flow<Resource<DepositsDto>> = flow {
-        Firebase.firestore.collection("bank").document("deposit").collection("summary").get().await().toObjects<DepositDto>().run {
+        Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_DOCUMENT).collection(Constant.SUMMARY_COLLECTION).get().await().toObjects<DepositDto>().run {
             if(isEmpty()) {
-                emit(Resource.Error(Throwable("EMPTY_PRODUCT")))
+                emit(Resource.Error(EmptyListException()))
             } else {
                 emit(Resource.Success(DepositsDto("등록된 예금 상품", this)))
             }
