@@ -5,6 +5,8 @@ object Constant {
     const val BANNER_COLLECTION = "banner"
     const val BANK_COLLECTION = "bank"
     const val SUMMARY_COLLECTION = "summary"
+    const val HEADER_COLLECTION = "header"
+    const val BODY_COLLECTION = "body"
     const val DEPOSIT_DOCUMENT = "deposit"
     const val NH_BANK_CODE = 1
     const val KB_BANK_CODE = 2

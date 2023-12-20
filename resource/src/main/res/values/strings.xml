@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="formatted_interest_rate">연 %1$.2f%% ~ %2$.2f%%</string>
+    <string name="formatted_single_interest_rate">연 %1$.2f%%</string>
+    <string name="formatted_interest_rate_description">(%1$s)</string>
+    <string name="highest_interest_rate_title">최고 금리</string>
+    <string name="base_interest_rate_title">기본 금리</string>
+    <string name="tax_free_title">비과세종합저축</string>
 </resources>

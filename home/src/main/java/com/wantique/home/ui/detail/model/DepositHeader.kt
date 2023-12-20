@@ -1,10 +1,10 @@
-package com.wantique.home.ui.home.model
+package com.wantique.home.ui.detail.model
 
 import com.wantique.base.ui.SimpleModel
 import com.wantique.home.BR
 import com.wantique.home.R
 
-data class DepositSmall(
+data class DepositHeader(
     val uid: String,
     val bankCode: Int,
     val title: String,
@@ -13,15 +13,11 @@ data class DepositSmall(
     val minRate: Double,
     val rateDescription: String,
     val taxFree: Boolean,
-    val onClickListener: (DepositSmall) -> Unit
 ) : SimpleModel {
-    override fun layoutId(): Int = R.layout.view_holder_deposit_small
-
+    override fun layoutId(): Int = R.layout.view_holder_deposit_header
     override fun bindingVariableIds(): Map<String, Int> {
         return hashMapOf<String, Int>().apply {
             put("model", BR.model)
-            put("bindingAdapterPosition", BR.bindingAdapterPosition)
-            put("absoluteAdapterPosition", BR.absoluteAdapterPosition)
         }
     }
 }

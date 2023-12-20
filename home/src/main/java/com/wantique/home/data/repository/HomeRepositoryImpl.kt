@@ -1,16 +1,20 @@
 package com.wantique.home.data.repository
 
+import android.content.res.Resources.NotFoundException
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.toObject
 import com.google.firebase.firestore.toObjects
 import com.google.firebase.ktx.Firebase
 import com.wantique.base.exception.EmptyListException
 import com.wantique.base.network.Resource
 import com.wantique.home.data.model.BannerDto
 import com.wantique.home.data.model.BannersDto
-import com.wantique.home.data.model.DepositDto
-import com.wantique.home.data.model.DepositsDto
+import com.wantique.home.data.model.DepositHeaderDto
+import com.wantique.home.data.model.SummaryDepositDto
+import com.wantique.home.data.model.SummaryDepositsDto
 import com.wantique.home.domain.repository.HomeRepository
+import com.wantique.home.ui.detail.model.DepositHeader
 import com.wantique.resource.Constant
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -29,22 +33,24 @@ class HomeRepositoryImpl @Inject constructor(
          */
 
         /*
-        Firebase.firestore.collection("bank").document("deposit").collection("summary").document("d19b5ea057b17a5b4f6673706203b29a5929ffa635abc67a913030d75069ae66").set(
-            DepositDto(3, "", "신한 My플러스 정기예금", "요건 달성 시 우대이자율을 제공하는 정기예금", 4.00, 3.80)
+        Firebase.firestore.collection("bank").document("deposit").collection("summary").document("05141dafce2a8535a5558caf88135ef40f57168d7a8d299da9cdb842f8cee217").set(
+            SummaryDepositDto("05141dafce2a8535a5558caf88135ef40f57168d7a8d299da9cdb842f8cee217", 1, "NH고향사랑기부예금", "고향사랑기부제 참여 시 우대금리를 제공하고 공익기금을 적립하는 지역사회공헌 상품", 3.10, 3.90)
         ).await()
+        */
 
-         */
-        Firebase.firestore.collection("bank").document("deposit").collection("summary").document("d19b5ea057b17a5b4f6673706203b29a5929ffa635abc67a913030d75069ae66").set(
-            DepositDto("d19b5ea057b17a5b4f6673706203b29a5929ffa635abc67a913030d75069ae66", 3, "신한 My플러스 정기예금", "1,3,6,12개월 필요한 기간 선택해서 50만원 이상 1억원 이내 가입 가능한 정기예금", 3.90, 3.70, "세전, 온라인금리", true)
-        )
+        /*
+        Firebase.firestore.collection("bank").document("deposit").collection("header").document("05141dafce2a8535a5558caf88135ef40f57168d7a8d299da9cdb842f8cee217").set(
+            DepositHeaderDto("05141dafce2a8535a5558caf88135ef40f57168d7a8d299da9cdb842f8cee217", 1, "NH고향사랑기부예금", "고향사랑기부제 참여 시 우대금리를 제공하고 공익기금을 적립하는 지역사회공헌 상품", 3.10, 3.90, "세전", true)
+        ).await()
+        */
     }
 
-    override fun getHighestDepositByBank(): Flow<Resource<DepositsDto>> = flow {
-        Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_DOCUMENT).collection(Constant.SUMMARY_COLLECTION).orderBy("maxRate", Query.Direction.DESCENDING).limit(5).get().await().toObjects<DepositDto>().run {
+    override fun getHighestDepositByBank(): Flow<Resource<SummaryDepositsDto>> = flow {
+        Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_DOCUMENT).collection(Constant.SUMMARY_COLLECTION).orderBy("maxRate", Query.Direction.DESCENDING).limit(5).get().await().toObjects<SummaryDepositDto>().run {
             if(isEmpty()) {
                 emit(Resource.Error(EmptyListException()))
             } else {
-                emit(Resource.Success(DepositsDto("최고 금리 TOP5", this)))
+                emit(Resource.Success(SummaryDepositsDto("최고 금리 TOP5", this)))
             }
         }
     }
@@ -59,13 +65,19 @@ class HomeRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getAllDepositProduct(): Flow<Resource<DepositsDto>> = flow {
-        Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_DOCUMENT).collection(Constant.SUMMARY_COLLECTION).get().await().toObjects<DepositDto>().run {
+    override fun getAllDepositProduct(): Flow<Resource<SummaryDepositsDto>> = flow {
+        Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_DOCUMENT).collection(Constant.SUMMARY_COLLECTION).get().await().toObjects<SummaryDepositDto>().run {
             if(isEmpty()) {
                 emit(Resource.Error(EmptyListException()))
             } else {
-                emit(Resource.Success(DepositsDto("등록된 예금 상품", this)))
+                emit(Resource.Success(SummaryDepositsDto("등록된 예금 상품", this)))
             }
         }
+    }
+
+    override fun getDepositHeader(uid: String): Flow<Resource<DepositHeaderDto>> = flow {
+        Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_DOCUMENT).collection(Constant.HEADER_COLLECTION).document(uid).get().await().toObject<DepositHeaderDto>()?.let {
+            emit(Resource.Success(it))
+        } ?: emit(Resource.Error(NotFoundException()))
     }
 }

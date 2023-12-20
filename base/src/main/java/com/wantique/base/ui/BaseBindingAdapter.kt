@@ -74,32 +74,6 @@ fun ViewPager2.setPagerIndicator(indicator: IndicatorView) {
 
 }
 
-/*
-@BindingAdapter("pager_indicator")
-fun ViewPager2.setPagerIndicator(indicator: IndicatorView) {
-    indicator.apply {
-        setSliderColor(context.getColor(com.wantique.resource.R.color.main_text), context.getColor(com.wantique.resource.R.color.sub_text))
-        setSliderWidth(10f)
-        setSliderHeight(5f)
-        setSlideMode(IndicatorSlideMode.WORM)
-        setIndicatorStyle(IndicatorStyle.CIRCLE)
-        setPageSize(adapter?.itemCount!!)
-    }
-
-    registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-        override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-            super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-            indicator.onPageScrolled(position, positionOffset, positionOffsetPixels)
-        }
-
-        override fun onPageSelected(position: Int) {
-            super.onPageSelected(position)
-            indicator.onPageSelected(position)
-        }
-    })
-}
-
- */
 
 @BindingAdapter("load_image")
 fun ImageView.loadImage(url: String?) {
@@ -123,6 +97,20 @@ fun ImageView.loadBankIcon(bankCode: Int?) {
         Glide.with(context)
             .load(resource)
             .into(this)
+    }
+}
+
+@BindingAdapter("bank_signature_color")
+fun ViewGroup.setBankSignatureColor(bankCode: Int?) {
+    bankCode?.let {
+        val resource = when(it) {
+            Constant.NH_BANK_CODE -> context.getColor(com.wantique.resource.R.color.nh_bank_signature_color)
+            Constant.KB_BANK_CODE -> context.getColor(com.wantique.resource.R.color.kb_bank_signature_color)
+            Constant.SHINHAN_BANK_CODE -> context.getColor(com.wantique.resource.R.color.shinhan_bank_signature_color)
+            else -> context.getColor(com.wantique.resource.R.color.default_bank_signature_color)
+        }
+
+        setBackgroundColor(resource)
     }
 }
 

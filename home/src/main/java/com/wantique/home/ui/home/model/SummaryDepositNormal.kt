@@ -4,16 +4,14 @@ import com.wantique.base.ui.SimpleModel
 import com.wantique.home.BR
 import com.wantique.home.R
 
-data class DepositNormal(
+data class SummaryDepositNormal(
     val uid: String,
     val bankCode: Int,
     val title: String,
     val description: String,
     val maxRate: Double,
     val minRate: Double,
-    val rateDescription: String,
-    val taxFree: Boolean,
-    val onClickListener: (DepositNormal) -> Unit
+    val onClickListener: (SummaryDepositNormal) -> Unit
 ) : SimpleModel {
     override fun layoutId(): Int = R.layout.view_holder_deposit_normal
 
