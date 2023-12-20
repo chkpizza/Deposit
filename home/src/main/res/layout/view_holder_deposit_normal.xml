@@ -59,7 +59,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="20dp"
-                android:text="@{@string/formatted_interest_rate(model.minimum, model.maximum)}"
+                android:text="@{@string/formatted_interest_rate(model.minRate, model.maxRate)}"
                 android:textColor="@color/main_text"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="parent"

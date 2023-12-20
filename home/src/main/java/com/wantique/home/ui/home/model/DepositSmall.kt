@@ -7,11 +7,12 @@ import com.wantique.home.R
 data class DepositSmall(
     val uid: String,
     val bankCode: Int,
-    val icon: String,
     val title: String,
     val description: String,
-    val maximum: Double,
-    val minimum: Double,
+    val maxRate: Double,
+    val minRate: Double,
+    val rateDescription: String,
+    val taxFree: Boolean,
     val onClickListener: (DepositSmall) -> Unit
 ) : SimpleModel {
     override fun layoutId(): Int = R.layout.view_holder_deposit_small

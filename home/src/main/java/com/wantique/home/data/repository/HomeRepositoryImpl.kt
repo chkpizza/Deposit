@@ -34,10 +34,13 @@ class HomeRepositoryImpl @Inject constructor(
         ).await()
 
          */
+        Firebase.firestore.collection("bank").document("deposit").collection("summary").document("d19b5ea057b17a5b4f6673706203b29a5929ffa635abc67a913030d75069ae66").set(
+            DepositDto("d19b5ea057b17a5b4f6673706203b29a5929ffa635abc67a913030d75069ae66", 3, "신한 My플러스 정기예금", "1,3,6,12개월 필요한 기간 선택해서 50만원 이상 1억원 이내 가입 가능한 정기예금", 3.90, 3.70, "세전, 온라인금리", true)
+        )
     }
 
     override fun getHighestDepositByBank(): Flow<Resource<DepositsDto>> = flow {
-        Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_DOCUMENT).collection(Constant.SUMMARY_COLLECTION).orderBy("maximum", Query.Direction.DESCENDING).limit(5).get().await().toObjects<DepositDto>().run {
+        Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_DOCUMENT).collection(Constant.SUMMARY_COLLECTION).orderBy("maxRate", Query.Direction.DESCENDING).limit(5).get().await().toObjects<DepositDto>().run {
             if(isEmpty()) {
                 emit(Resource.Error(EmptyListException()))
             } else {
