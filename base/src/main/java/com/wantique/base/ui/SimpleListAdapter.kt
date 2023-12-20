@@ -40,6 +40,6 @@ class SimpleListAdapter<ITEM: SimpleModel> : SimpleListAdapterDependency<ITEM>, 
 
     private fun createAutoBindingViewHolder(layoutId: Int, parent: ViewGroup): SimpleAutoBindingViewHolder {
         val item = layoutIdMap[layoutId]!!
-        return SimpleAutoBindingViewHolder(item.bindingVariableId(), layoutId, parent)
+        return SimpleAutoBindingViewHolder(item.bindingVariableIds(), layoutId, parent)
     }
 }
