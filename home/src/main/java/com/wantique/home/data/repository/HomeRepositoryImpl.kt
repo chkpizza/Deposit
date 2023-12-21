@@ -6,10 +6,12 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.toObject
 import com.google.firebase.firestore.toObjects
 import com.google.firebase.ktx.Firebase
+import com.wantique.base.exception.DepositNotFoundException
 import com.wantique.base.exception.EmptyListException
 import com.wantique.base.network.Resource
 import com.wantique.home.data.model.BannerDto
 import com.wantique.home.data.model.BannersDto
+import com.wantique.home.data.model.DepositBodyDto
 import com.wantique.home.data.model.DepositHeaderDto
 import com.wantique.home.data.model.SummaryDepositDto
 import com.wantique.home.data.model.SummaryDepositsDto
@@ -41,6 +43,12 @@ class HomeRepositoryImpl @Inject constructor(
         /*
         Firebase.firestore.collection("bank").document("deposit").collection("header").document("05141dafce2a8535a5558caf88135ef40f57168d7a8d299da9cdb842f8cee217").set(
             DepositHeaderDto("05141dafce2a8535a5558caf88135ef40f57168d7a8d299da9cdb842f8cee217", 1, "NH고향사랑기부예금", "고향사랑기부제 참여 시 우대금리를 제공하고 공익기금을 적립하는 지역사회공헌 상품", 3.10, 3.90, "세전", true)
+        ).await()
+        */
+
+        /*
+        Firebase.firestore.collection("bank").document("deposit").collection("body").document("05141dafce2a8535a5558caf88135ef40f57168d7a8d299da9cdb842f8cee217").set(
+            DepositBodyDto("05141dafce2a8535a5558caf88135ef40f57168d7a8d299da9cdb842f8cee217", 1, "영업점 및 비대면", "개인", "1년(12개월)", "1백만원 이상", true)
         ).await()
         */
     }
@@ -78,6 +86,12 @@ class HomeRepositoryImpl @Inject constructor(
     override fun getDepositHeader(uid: String): Flow<Resource<DepositHeaderDto>> = flow {
         Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_DOCUMENT).collection(Constant.HEADER_COLLECTION).document(uid).get().await().toObject<DepositHeaderDto>()?.let {
             emit(Resource.Success(it))
-        } ?: emit(Resource.Error(NotFoundException()))
+        } ?: emit(Resource.Error(DepositNotFoundException()))
+    }
+
+    override fun getDepositBody(uid: String): Flow<Resource<DepositBodyDto>> = flow {
+        Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_DOCUMENT).collection(Constant.BODY_COLLECTION).document(uid).get().await().toObject<DepositBodyDto>()?.let {
+            emit(Resource.Success(it))
+        } ?: emit(Resource.Error(DepositNotFoundException()))
     }
 }
