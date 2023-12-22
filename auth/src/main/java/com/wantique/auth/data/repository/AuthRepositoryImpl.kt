@@ -1,13 +1,16 @@
 package com.wantique.auth.data.repository
 
-import android.util.Log
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.toObject
+import com.google.firebase.firestore.toObjects
 import com.google.firebase.ktx.Firebase
+import com.wantique.auth.data.model.AuthBannerDto
+import com.wantique.auth.data.model.AuthBannersDto
 import com.wantique.auth.data.model.UserDto
 import com.wantique.auth.domain.model.User
 import com.wantique.auth.domain.repository.AuthRepository
+import com.wantique.base.exception.EmptyListException
 import com.wantique.base.exception.UserNotFoundException
 import com.wantique.base.network.Resource
 import com.wantique.resource.Constant
@@ -34,6 +37,16 @@ class AuthRepositoryImpl @Inject constructor(
             emit(Resource.Success(it.asDomain()))
         } ?: run {
             emit(Resource.Error(UserNotFoundException()))
+        }
+    }
+
+    override fun getAppExplanation(): Flow<Resource<AuthBannersDto>> = flow {
+        Firebase.firestore.collection(Constant.IMAGE_COLLECTION).document(Constant.BANNER_DOCUMENT).collection(Constant.AUTH_COLLECTION).get().await().toObjects<AuthBannerDto>().run {
+            if(isEmpty()) {
+                emit(Resource.Error(EmptyListException()))
+            } else {
+                emit(Resource.Success(AuthBannersDto(this)))
+            }
         }
     }
 }
