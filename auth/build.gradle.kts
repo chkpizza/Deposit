@@ -59,6 +59,7 @@ dependencies {
     implementation(AndroidX.NAVIGATION_FRAGMENT)
     implementation(ThirdParty.DAGGER)
     kapt(ThirdParty.DAGGER_COMPILER)
+    implementation(ThirdParty.PAGER_INDICATOR)
 
     implementation(platform(Firebase.FIREBASE_BOM))
     implementation(Firebase.FIREBASE_ANALYTICS)

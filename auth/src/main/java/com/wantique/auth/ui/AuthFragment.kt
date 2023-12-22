@@ -63,10 +63,15 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(R.layout.fragment_auth) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.vm = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
         setupInsets()
         setUpGoogleSignIn()
         setUpViewListener()
         setUpNavigateObserver()
+
+        viewModel.load()
     }
 
     private fun setupInsets() {

@@ -1,5 +1,6 @@
 package com.wantique.base.ui
 
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -77,6 +78,7 @@ fun ViewPager2.setPagerIndicator(indicator: IndicatorView) {
 
 @BindingAdapter("load_image")
 fun ImageView.loadImage(url: String?) {
+    Log.d("loadImageUrl", url.toString())
     url?.let {
         Glide.with(context)
             .load(url)

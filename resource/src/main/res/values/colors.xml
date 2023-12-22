@@ -3,8 +3,8 @@
     <color name="main_text">#252525</color>
     <color name="sub_text">#707070</color>
     <color name="divider">#f5f5f5</color>
-    <color name="enable_color">#FF935E</color>
-    <color name="disable_color">#EEEDF0</color>
+    <color name="enable_color">#252525</color>
+    <color name="disable_color">#d9d9d9</color>
     <color name="shinhan_bank_signature_color">#A1DEEE</color>
     <color name="nh_bank_signature_color">#FBDB96</color>
     <color name="kb_bank_signature_color">#FDD587</color>
