@@ -29,10 +29,10 @@ class HomeRepositoryImpl @Inject constructor(
 ) : HomeRepository {
     suspend fun registerDeposit() {
         /*
-        Firebase.firestore.collection("banner").document(System.currentTimeMillis().toString()).set(
-            BannerDto("https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2022/05/22/f1c66ccb-f5bf-4382-af54-96ba8f2d3fb5.jpg")
+        Firebase.firestore.collection("image").document("banner").collection("home").document(System.currentTimeMillis().toString()).set(
+            BannerDto("https://image.xportsnews.com/contents/images/upload/article/2023/0310/mb_1678433961946948.jpg")
         ).await()
-         */
+        */
 
         /*
         Firebase.firestore.collection("bank").document("deposit").collection("summary").document("05141dafce2a8535a5558caf88135ef40f57168d7a8d299da9cdb842f8cee217").set(
@@ -64,7 +64,7 @@ class HomeRepositoryImpl @Inject constructor(
     }
 
     override fun getHomeBanner(): Flow<Resource<BannersDto>> = flow {
-        Firebase.firestore.collection(Constant.BANNER_COLLECTION).get().await().toObjects<BannerDto>().run {
+        Firebase.firestore.collection(Constant.IMAGE_COLLECTION).document(Constant.BANNER_DOCUMENT).collection(Constant.HOME_COLLECTION).get().await().toObjects<BannerDto>().run {
             if(isEmpty()) {
                 emit(Resource.Error(EmptyListException()))
             } else {
