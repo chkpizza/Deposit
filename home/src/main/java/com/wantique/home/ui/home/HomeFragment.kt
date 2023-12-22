@@ -2,7 +2,6 @@ package com.wantique.home.ui.home
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.ViewCompat
@@ -17,8 +16,8 @@ import com.wantique.home.R
 import com.wantique.home.data.repository.HomeRepositoryImpl
 import com.wantique.home.databinding.FragmentHomeBinding
 import com.wantique.home.di.HomeComponentProvider
-import com.wantique.home.ui.home.model.DepositNormal
-import com.wantique.home.ui.home.model.DepositSmall
+import com.wantique.home.ui.home.model.SummaryDepositNormal
+import com.wantique.home.ui.home.model.SummaryDepositSmall
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -67,8 +66,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.navigateToDeposit.collect {
                     when(it) {
-                        is DepositSmall -> navigator.navigate(HomeFragmentDirections.actionHomeFragmentToDepositFragment(it.uid))
-                        is DepositNormal -> navigator.navigate(HomeFragmentDirections.actionHomeFragmentToDepositFragment(it.uid))
+                        is SummaryDepositSmall -> navigator.navigate(HomeFragmentDirections.actionHomeFragmentToDepositFragment(it.uid))
+                        is SummaryDepositNormal -> navigator.navigate(HomeFragmentDirections.actionHomeFragmentToDepositFragment(it.uid))
                     }
                 }
             }

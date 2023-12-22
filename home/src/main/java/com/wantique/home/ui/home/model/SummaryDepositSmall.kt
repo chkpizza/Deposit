@@ -4,15 +4,14 @@ import com.wantique.base.ui.SimpleModel
 import com.wantique.home.BR
 import com.wantique.home.R
 
-data class DepositSmall(
+data class SummaryDepositSmall(
     val uid: String,
     val bankCode: Int,
-    val icon: String,
     val title: String,
     val description: String,
-    val maximum: Double,
-    val minimum: Double,
-    val onClickListener: (DepositSmall) -> Unit
+    val maxRate: Double,
+    val minRate: Double,
+    val onClickListener: (SummaryDepositSmall) -> Unit
 ) : SimpleModel {
     override fun layoutId(): Int = R.layout.view_holder_deposit_small
 
@@ -23,4 +22,5 @@ data class DepositSmall(
             put("absoluteAdapterPosition", BR.absoluteAdapterPosition)
         }
     }
+
 }

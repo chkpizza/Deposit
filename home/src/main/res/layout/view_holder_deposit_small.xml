@@ -3,21 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="model"
-            type="com.wantique.home.ui.home.model.DepositSmall" />
+            type="com.wantique.home.ui.home.model.SummaryDepositSmall" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="120dp"
         android:layout_height="120dp"
-        app:cardElevation="0dp"
-        app:cardCornerRadius="8dp"
-        app:strokeWidth="1dp"
-        app:strokeColor="#d9d9d9"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
-        android:onClick="@{()->model.onClickListener.invoke(model)}">
+        android:onClick="@{()->model.onClickListener.invoke(model)}"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp"
+        app:strokeColor="#d9d9d9"
+        app:strokeWidth="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -27,42 +28,44 @@
                 android:id="@+id/deposit_iv_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                app:load_image="@{model.icon}"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:scaleType="centerCrop"
                 android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:load_bank_icon="@{model.bankCode}" />
 
             <TextView
                 android:id="@+id/deposit_tv_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{model.title}"
-                app:layout_constraintTop_toBottomOf="@id/deposit_iv_icon"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:textSize="13sp"
-                android:textColor="#252525"
-                android:layout_marginTop="4dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp" />
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="@{model.title}"
+                android:textColor="@color/main_text"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/deposit_iv_icon" />
 
             <TextView
                 android:id="@+id/deposit_tv_interest_rate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{@string/formatted_interest_rate(model.minimum, model.maximum)}"
-                android:textColor="#707070"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="8dp"
-                android:textSize="11sp"
-                android:layout_marginTop="24dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"/>
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="@{@string/formatted_interest_rate(model.minRate, model.maxRate)}"
+                android:textColor="@color/sub_text"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

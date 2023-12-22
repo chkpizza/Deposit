@@ -1,2 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <color name="main_text">#252525</color>
+    <color name="sub_text">#707070</color>
+    <color name="divider">#f5f5f5</color>
+    <color name="enable_color">#FF935E</color>
+    <color name="disable_color">#EEEDF0</color>
+    <color name="shinhan_bank_signature_color">#A1DEEE</color>
+    <color name="nh_bank_signature_color">#FBDB96</color>
+    <color name="kb_bank_signature_color">#FDD587</color>
+    <color name="default_bank_signature_color">#f5f5f5</color>
+</resources>

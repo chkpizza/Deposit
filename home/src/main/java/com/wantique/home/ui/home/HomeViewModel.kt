@@ -13,10 +13,10 @@ import com.wantique.home.domain.usecase.GetHighestDepositByBankUseCase
 import com.wantique.home.domain.usecase.GetHomeBannerUseCase
 import com.wantique.home.ui.home.model.Banner
 import com.wantique.home.ui.home.model.Banners
-import com.wantique.home.ui.home.model.DepositNormal
-import com.wantique.home.ui.home.model.DepositSmall
 import com.wantique.home.ui.home.model.DepositsHorizontal
 import com.wantique.home.ui.home.model.DepositsVertical
+import com.wantique.home.ui.home.model.SummaryDepositNormal
+import com.wantique.home.ui.home.model.SummaryDepositSmall
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -70,7 +70,7 @@ class HomeViewModel @Inject constructor(
             } ?: run {
                 summary = DepositsHorizontal(it.getValue().title, SimpleSubmittableState<SimpleModel>().apply {
                     submitList(it.getValue().deposits.map { deposit ->
-                        DepositSmall(deposit.uid, deposit.bankCode, deposit.icon, deposit.title, deposit.description, deposit.maximum, deposit.minimum, ::onDepositClickListener)
+                        SummaryDepositSmall(deposit.uid, deposit.bankCode, deposit.title, deposit.description, deposit.maxRate, deposit.minRate,  ::onDepositClickListener)
                     })
                 })
 
@@ -106,7 +106,7 @@ class HomeViewModel @Inject constructor(
             } ?: run {
                 depositsHorizontal = DepositsVertical(it.getValue().title, SimpleSubmittableState<SimpleModel>().apply {
                     submitList(it.getValue().deposits.map { deposit ->
-                        DepositNormal(deposit.uid, deposit.bankCode, deposit.icon, deposit.title, deposit.description, deposit.maximum, deposit.minimum, :: onDepositClickListener)
+                        SummaryDepositNormal(deposit.uid, deposit.bankCode, deposit.title, deposit.description, deposit.maxRate, deposit.minRate, :: onDepositClickListener)
                     })
                 })
 

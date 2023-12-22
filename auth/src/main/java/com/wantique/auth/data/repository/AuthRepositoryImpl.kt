@@ -10,6 +10,7 @@ import com.wantique.auth.domain.model.User
 import com.wantique.auth.domain.repository.AuthRepository
 import com.wantique.base.exception.UserNotFoundException
 import com.wantique.base.network.Resource
+import com.wantique.resource.Constant
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -20,7 +21,7 @@ class AuthRepositoryImpl @Inject constructor(
     private val dispatcher: CoroutineDispatcher
 ) : AuthRepository {
     override fun isExistUser(): Flow<Resource<User>> = flow {
-        Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).get().await().toObject<UserDto>()?.let {
+        Firebase.firestore.collection(Constant.USER_COLLECTION).document(Firebase.auth.uid.toString()).get().await().toObject<UserDto>()?.let {
             emit(Resource.Success(it.asDomain()))
         } ?: run {
             emit(Resource.Error(UserNotFoundException()))
@@ -28,8 +29,8 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override fun registerUser(): Flow<Resource<User>> = flow {
-        Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).set(UserDto(Firebase.auth.uid.toString(), System.currentTimeMillis().toString())).await()
-        Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).get().await().toObject<UserDto>()?.let {
+        Firebase.firestore.collection(Constant.USER_COLLECTION).document(Firebase.auth.uid.toString()).set(UserDto(Firebase.auth.uid.toString(), System.currentTimeMillis().toString())).await()
+        Firebase.firestore.collection(Constant.USER_COLLECTION).document(Firebase.auth.uid.toString()).get().await().toObject<UserDto>()?.let {
             emit(Resource.Success(it.asDomain()))
         } ?: run {
             emit(Resource.Error(UserNotFoundException()))

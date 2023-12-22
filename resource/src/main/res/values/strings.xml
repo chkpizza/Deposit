@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="formatted_interest_rate">연 %1$.2f%% ~ %2$.2f%%</string>
+    <string name="formatted_single_interest_rate">연 %1$.2f%%</string>
+    <string name="formatted_interest_rate_description">(%1$s)</string>
+    <string name="highest_interest_rate_title">최고 금리</string>
+    <string name="base_interest_rate_title">기본 금리</string>
+    <string name="tax_free_title">비과세종합저축</string>
+    <string name="deposit_sign_up_method">가입 방법</string>
+    <string name="deposit_target">가입 대상</string>
+    <string name="deposit_contract_period">계약 기간</string>
+    <string name="deposit_sign_up_amount">가입 금액</string>
+    <string name="deposit_protect">예금자 보호</string>
+    <string name="deposit_protect_description">이 예금은 예금자보호법에 따라 예금보험공사가 보호하되, 보호한도는 본 은행에 있는 귀하의 모든 예금보호대상 금융상품의 원금과 소정의 이자를 합하여 1인당 최고5천만원 이며, 5천만원을 초과하는 나머지 금액은 보호하지 않습니다.</string>
+    <string name="deposit_detail">자세한 정보 확인하기</string>
+</resources>

@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="model"
-            type="com.wantique.home.ui.home.model.DepositNormal" />
+            type="com.wantique.home.ui.home.model.SummaryDepositNormal" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -23,9 +24,9 @@
                 android:layout_height="36dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
-                app:load_image="@{model.icon}"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:load_bank_icon="@{model.bankCode}" />
 
             <TextView
                 android:id="@+id/deposit_tv_title"
@@ -33,11 +34,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="16dp"
-                android:textColor="#252525"
-                android:textSize="15sp"
+                android:fontFamily="@font/pretendard_medium"
                 android:text="@{model.title}"
-                app:layout_constraintStart_toEndOf="@id/deposit_iv_icon"
+                android:textColor="@color/main_text"
+                android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/deposit_iv_icon"
                 app:layout_constraintTop_toTopOf="@id/deposit_iv_icon" />
 
             <TextView
@@ -45,9 +47,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:textColor="#707070"
-                android:textSize="13sp"
+                android:fontFamily="@font/pretendard_medium"
                 android:text="@{model.description}"
+                android:textColor="@color/sub_text"
+                android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="@id/deposit_tv_title"
                 app:layout_constraintStart_toStartOf="@id/deposit_tv_title"
                 app:layout_constraintTop_toBottomOf="@id/deposit_tv_title" />
@@ -59,8 +62,9 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="20dp"
-                android:text="@{@string/formatted_interest_rate(model.minimum, model.maximum)}"
-                android:textColor="#252525"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="@{@string/formatted_interest_rate(model.minRate, model.maxRate)}"
+                android:textColor="@color/main_text"
                 android:textSize="13sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/deposit_tv_description" />
@@ -71,7 +75,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
-                android:background="#f5f5f5"
+                android:background="@color/divider"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/deposit_tv_interest_rate" />

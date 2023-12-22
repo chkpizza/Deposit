@@ -39,6 +39,7 @@ android {
 
 dependencies {
     implementation(project(":base"))
+    implementation(project(":resource"))
 
     implementation(AndroidX.CORE)
     implementation(AndroidX.APP_COMAPT)
@@ -57,4 +58,5 @@ dependencies {
     implementation(Firebase.FIREBASE_AUTH)
     implementation(Firebase.FIRESTORE)
     implementation(Google.PLAY_SERVICE_AUTH)
+    implementation(ThirdParty.PAGER_INDICATOR)
 }
