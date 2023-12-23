@@ -1,7 +1,9 @@
 package com.wantique.home.data.model
 
+import androidx.annotation.Keep
 import com.wantique.home.domain.model.DepositBody
 
+@Keep
 data class DepositBodyDto(
     val uid: String? = null,
     val bankCode: Int? = null,
