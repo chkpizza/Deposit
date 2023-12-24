@@ -14,4 +14,11 @@ object Constant {
     const val NH_BANK_CODE = 1
     const val KB_BANK_CODE = 2
     const val SHINHAN_BANK_CODE = 3
+    const val HANA_BANK_CODE = 4
+    const val WOORI_BANK_CODE = 5
+    const val CU_BANK_CODE = 6
+    const val SUHYUP_BANK_CODE = 7
+    const val KAKAO_BANK_CODE = 8
+    const val K_BANK_CODE = 9
+    const val IBK_BANK_CODE = 10
 }
