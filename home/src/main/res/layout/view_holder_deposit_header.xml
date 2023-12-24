@@ -154,11 +154,13 @@
 
             <ImageView
                 android:id="@+id/deposit_iv_icon"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:padding="10dp"
+                android:background="@color/divider"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:load_bank_icon="@{model.bankCode}"
-                tools:src="@drawable/ic_nh" />
+                tools:src="@drawable/ic_kb" />
 
         </com.google.android.material.card.MaterialCardView>
 

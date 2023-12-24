@@ -5,8 +5,17 @@
     <color name="divider">#f5f5f5</color>
     <color name="enable_color">#252525</color>
     <color name="disable_color">#d9d9d9</color>
-    <color name="shinhan_bank_signature_color">#A1DEEE</color>
-    <color name="nh_bank_signature_color">#FBDB96</color>
-    <color name="kb_bank_signature_color">#FDD587</color>
+    <color name="nh_bank_signature_color">#FFC954</color>
+    <color name="kb_bank_signature_color">#FEE1A8</color>
+    <color name="shinhan_bank_signature_color">#BFD9EC</color>
+    <color name="hana_bank_signature_color">#98DFD8</color>
+    <color name="woori_bank_signature_color">#A4E1FA</color>
+    <color name="cu_bank_signature_color">#B5DBFD</color>
+    <color name="suhyup_bank_signature_color">#BFE5FF</color>
+    <color name="kakao_bank_signature_color">#FFEF69</color>
+    <color name="k_bank_signature_color">#FFC9D4</color>
+    <color name="ibk_bank_signature_color">#D3F1FF</color>
+
     <color name="default_bank_signature_color">#f5f5f5</color>
+
 </resources>

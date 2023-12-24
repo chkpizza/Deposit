@@ -1,5 +1,6 @@
 package com.wantique.base.ui
 
+import android.graphics.Color
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -116,13 +117,13 @@ fun ViewGroup.setBankSignatureColor(bankCode: Int?) {
             Constant.NH_BANK_CODE -> context.getColor(com.wantique.resource.R.color.nh_bank_signature_color)
             Constant.KB_BANK_CODE -> context.getColor(com.wantique.resource.R.color.kb_bank_signature_color)
             Constant.SHINHAN_BANK_CODE -> context.getColor(com.wantique.resource.R.color.shinhan_bank_signature_color)
-            Constant.HANA_BANK_CODE -> context.getColor(com.wantique.resource.R.color.shinhan_bank_signature_color)
-            Constant.WOORI_BANK_CODE -> context.getColor(com.wantique.resource.R.color.shinhan_bank_signature_color)
-            Constant.CU_BANK_CODE -> context.getColor(com.wantique.resource.R.color.shinhan_bank_signature_color)
-            Constant.SUHYUP_BANK_CODE -> context.getColor(com.wantique.resource.R.color.shinhan_bank_signature_color)
-            Constant.KAKAO_BANK_CODE -> context.getColor(com.wantique.resource.R.color.shinhan_bank_signature_color)
-            Constant.K_BANK_CODE -> context.getColor(com.wantique.resource.R.color.shinhan_bank_signature_color)
-            Constant.IBK_BANK_CODE -> context.getColor(com.wantique.resource.R.color.shinhan_bank_signature_color)
+            Constant.HANA_BANK_CODE -> context.getColor(com.wantique.resource.R.color.hana_bank_signature_color)
+            Constant.WOORI_BANK_CODE -> context.getColor(com.wantique.resource.R.color.woori_bank_signature_color)
+            Constant.CU_BANK_CODE -> context.getColor(com.wantique.resource.R.color.cu_bank_signature_color)
+            Constant.SUHYUP_BANK_CODE -> context.getColor(com.wantique.resource.R.color.suhyup_bank_signature_color)
+            Constant.KAKAO_BANK_CODE -> context.getColor(com.wantique.resource.R.color.kakao_bank_signature_color)
+            Constant.K_BANK_CODE -> context.getColor(com.wantique.resource.R.color.k_bank_signature_color)
+            Constant.IBK_BANK_CODE -> context.getColor(com.wantique.resource.R.color.ibk_bank_signature_color)
             else -> context.getColor(com.wantique.resource.R.color.default_bank_signature_color)
         }
 
