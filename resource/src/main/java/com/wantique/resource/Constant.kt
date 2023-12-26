@@ -21,4 +21,5 @@ object Constant {
     const val KAKAO_BANK_CODE = 8
     const val K_BANK_CODE = 9
     const val IBK_BANK_CODE = 10
+    const val BACK_PRESS_INTERVAL = 1000
 }
