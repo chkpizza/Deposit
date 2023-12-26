@@ -2,8 +2,11 @@ package com.wantique.home.ui.home
 
 import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.ViewCompat
 import androidx.core.view.updatePadding
 import androidx.lifecycle.Lifecycle
@@ -18,6 +21,7 @@ import com.wantique.home.databinding.FragmentHomeBinding
 import com.wantique.home.di.HomeComponentProvider
 import com.wantique.home.ui.home.model.SummaryDepositNormal
 import com.wantique.home.ui.home.model.SummaryDepositSmall
+import com.wantique.resource.Constant
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,9 +30,32 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     @Inject lateinit var factory: ViewModelProvider.Factory
     private val viewModel by navGraphViewModels<HomeViewModel>(R.id.home_nav_graph) { factory }
 
+    private lateinit var onBackPressedCallback: OnBackPressedCallback
+    private var clickTime: Long = 0
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (context.applicationContext as HomeComponentProvider).getHomeComponent().inject(this)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if(System.currentTimeMillis() - clickTime >= Constant.BACK_PRESS_INTERVAL) {
+                    clickTime = System.currentTimeMillis()
+                    Toast.makeText(requireActivity(), getString(com.wantique.resource.R.string.home_back_press_notice), Toast.LENGTH_SHORT).show()
+                } else {
+                    requireActivity().finish()
+                }
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
