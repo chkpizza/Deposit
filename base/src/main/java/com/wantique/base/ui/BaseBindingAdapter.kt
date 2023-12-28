@@ -1,6 +1,7 @@
 package com.wantique.base.ui
 
 import android.graphics.Color
+import android.graphics.Paint
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -129,6 +130,12 @@ fun ViewGroup.setBankSignatureColor(bankCode: Int?) {
 
         setBackgroundColor(resource)
     }
+}
+
+@BindingAdapter("underline_text")
+fun TextView.setUnderlineText(text: String) {
+    paintFlags = Paint.UNDERLINE_TEXT_FLAG
+    setText(text)
 }
 
 @BindingAdapter("error_handler")
