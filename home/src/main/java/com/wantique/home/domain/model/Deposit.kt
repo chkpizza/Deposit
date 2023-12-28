@@ -1,6 +1,6 @@
 package com.wantique.home.domain.model
 
-data class SummaryDeposit(
+data class Deposit(
     val uid: String,
     val bankCode: Int,
     val title: String,
