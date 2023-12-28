@@ -55,9 +55,13 @@
             android:onClick="@{()->model.onClickListener.invoke()}"
             android:text="@string/deposit_more_view"
             android:textColor="@color/sub_text"
+            android:gravity="center"
+            app:drawableStartCompat="@drawable/ic_add_round"
+            android:drawablePadding="4dp"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/deposit_rv" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
