@@ -3,7 +3,7 @@ package com.wantique.deposit.di
 import androidx.lifecycle.ViewModel
 import com.wantique.auth.ui.AuthViewModel
 import com.wantique.base.di.ViewModelKey
-import com.wantique.home.ui.detail.DepositViewModel
+import com.wantique.home.ui.detail.DetailViewModel
 import com.wantique.home.ui.home.HomeViewModel
 import dagger.Binds
 import dagger.Module
@@ -23,6 +23,6 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(DepositViewModel::class)
-    abstract fun bindDepositViewModel(viewModel: DepositViewModel): ViewModel
+    @ViewModelKey(DetailViewModel::class)
+    abstract fun bindDetailViewModel(viewModel: DetailViewModel): ViewModel
 }

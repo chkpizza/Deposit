@@ -6,13 +6,13 @@
     <data>
         <variable
             name="vm"
-            type="com.wantique.home.ui.detail.DepositViewModel" />
+            type="com.wantique.home.ui.detail.DetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.detail.DepositFragment">
+        tools:context=".ui.detail.DetailFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/deposit_rv_detail"

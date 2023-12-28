@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/depositFragment"
-        android:name="com.wantique.home.ui.detail.DepositFragment"
+        android:name="com.wantique.home.ui.detail.DetailFragment"
         android:label="DepositFragment" >
         <argument
             android:name="uid"
