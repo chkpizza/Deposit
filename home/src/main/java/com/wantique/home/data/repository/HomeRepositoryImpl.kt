@@ -63,12 +63,11 @@ class HomeRepositoryImpl @Inject constructor(
 
     override fun getDepositProduct(): Flow<Resource<DepositsDto>> = flow {
         Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_TITLE_DOCUMENT).get().await().toObject<TitleDto>()?.let { titleDto ->
-            Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_DOCUMENT).collection(Constant.SUMMARY_COLLECTION).limit(4).get().await().toObjects<DepositDto>().run {
+            Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_DOCUMENT).collection(Constant.SUMMARY_COLLECTION).get().await().toObjects<DepositDto>().run {
                 if(isEmpty()) {
                     emit(Resource.Error(EmptyListException()))
                 } else {
-                    Log.d("limitTest", this.toString())
-                    emit(Resource.Success(DepositsDto(titleDto.title!!, this)))
+                    emit(Resource.Success(DepositsDto(titleDto.title!!, shuffled().take(4))))
                 }
             }
         } ?: emit(Resource.Error(EmptyListException()))
