@@ -6,7 +6,7 @@
 
         <variable
             name="model"
-            type="com.wantique.home.ui.home.model.Banners" />
+            type="com.wantique.home.ui.home.model.BannerHorizontal" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

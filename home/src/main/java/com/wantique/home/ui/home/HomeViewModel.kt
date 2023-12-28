@@ -12,7 +12,7 @@ import com.wantique.home.domain.usecase.GetAllDepositProductUseCase
 import com.wantique.home.domain.usecase.GetHighestDepositByBankUseCase
 import com.wantique.home.domain.usecase.GetHomeBannerUseCase
 import com.wantique.home.ui.home.model.Banner
-import com.wantique.home.ui.home.model.Banners
+import com.wantique.home.ui.home.model.BannerHorizontal
 import com.wantique.home.ui.home.model.Deposit
 import com.wantique.home.ui.home.model.DepositGrid
 import com.wantique.home.ui.home.model.DepositHorizontal
@@ -46,7 +46,7 @@ class HomeViewModel @Inject constructor(
     val navigateToDeposit = _navigateToDeposit.asSharedFlow()
 
     private lateinit var topDeposit: DepositHorizontal<SimpleModel>
-    private lateinit var banners: Banners<SimpleModel>
+    private lateinit var bannerHorizontal: BannerHorizontal<SimpleModel>
     private lateinit var deposit: DepositGrid<SimpleModel>
 
     fun load() {
@@ -89,13 +89,13 @@ class HomeViewModel @Inject constructor(
             it.isErrorOrNull()?.let { e ->
                 _errorState.value = e
             } ?: run {
-                banners = Banners(SimpleSubmittableState<SimpleModel>().apply {
+                bannerHorizontal = BannerHorizontal(SimpleSubmittableState<SimpleModel>().apply {
                     submitList(it.getValue().banners.map { banner ->
                         Banner(banner.url, ::onBannerClickListener)
                     })
                 })
 
-                merge(banners)
+                merge(bannerHorizontal)
             }
         }.collect()
     }
