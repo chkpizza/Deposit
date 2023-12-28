@@ -1,6 +1,5 @@
 package com.wantique.home.data.repository
 
-import android.content.res.Resources.NotFoundException
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.toObject
@@ -12,12 +11,11 @@ import com.wantique.base.network.Resource
 import com.wantique.home.data.model.BannerDto
 import com.wantique.home.data.model.BannersDto
 import com.wantique.home.data.model.DepositBodyDto
+import com.wantique.home.data.model.DepositDto
 import com.wantique.home.data.model.DepositHeaderDto
-import com.wantique.home.data.model.SummaryDepositDto
-import com.wantique.home.data.model.SummaryDepositsDto
+import com.wantique.home.data.model.DepositsDto
 import com.wantique.home.data.model.TitleDto
 import com.wantique.home.domain.repository.HomeRepository
-import com.wantique.home.ui.detail.model.DepositHeader
 import com.wantique.resource.Constant
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -28,13 +26,13 @@ import javax.inject.Inject
 class HomeRepositoryImpl @Inject constructor(
     private val dispatcher: CoroutineDispatcher
 ) : HomeRepository {
-    override fun getHighestDepositByBank(): Flow<Resource<SummaryDepositsDto>> = flow {
+    override fun getHighestDepositByBank(): Flow<Resource<DepositsDto>> = flow {
         Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_TOP_TITLE_DOCUMENT).get().await().toObject<TitleDto>()?.let { titleDto ->
-            Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_DOCUMENT).collection(Constant.SUMMARY_COLLECTION).orderBy("maxRate", Query.Direction.DESCENDING).limit(5).get().await().toObjects<SummaryDepositDto>().run {
+            Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_DOCUMENT).collection(Constant.SUMMARY_COLLECTION).orderBy("maxRate", Query.Direction.DESCENDING).limit(5).get().await().toObjects<DepositDto>().run {
                 if(isEmpty()) {
                     emit(Resource.Error(EmptyListException()))
                 } else {
-                    emit(Resource.Success(SummaryDepositsDto(titleDto.title!!, this)))
+                    emit(Resource.Success(DepositsDto(titleDto.title!!, this)))
                 }
             }
         } ?: emit(Resource.Error(EmptyListException()))
@@ -50,13 +48,13 @@ class HomeRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getAllDepositProduct(): Flow<Resource<SummaryDepositsDto>> = flow {
+    override fun getAllDepositProduct(): Flow<Resource<DepositsDto>> = flow {
         Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_TITLE_DOCUMENT).get().await().toObject<TitleDto>()?.let { titleDto ->
-            Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_DOCUMENT).collection(Constant.SUMMARY_COLLECTION).get().await().toObjects<SummaryDepositDto>().run {
+            Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_DOCUMENT).collection(Constant.SUMMARY_COLLECTION).get().await().toObjects<DepositDto>().run {
                 if(isEmpty()) {
                     emit(Resource.Error(EmptyListException()))
                 } else {
-                    emit(Resource.Success(SummaryDepositsDto(titleDto.title!!, this)))
+                    emit(Resource.Success(DepositsDto(titleDto.title!!, this)))
                 }
             }
         } ?: emit(Resource.Error(EmptyListException()))

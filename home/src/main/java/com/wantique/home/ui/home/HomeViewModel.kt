@@ -13,10 +13,10 @@ import com.wantique.home.domain.usecase.GetHighestDepositByBankUseCase
 import com.wantique.home.domain.usecase.GetHomeBannerUseCase
 import com.wantique.home.ui.home.model.Banner
 import com.wantique.home.ui.home.model.Banners
-import com.wantique.home.ui.home.model.DepositsHorizontal
-import com.wantique.home.ui.home.model.DepositsVertical
-import com.wantique.home.ui.home.model.SummaryDepositNormal
-import com.wantique.home.ui.home.model.SummaryDepositSmall
+import com.wantique.home.ui.home.model.Deposit
+import com.wantique.home.ui.home.model.DepositGrid
+import com.wantique.home.ui.home.model.DepositHorizontal
+import com.wantique.home.ui.home.model.TopDeposit
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -36,15 +36,18 @@ class HomeViewModel @Inject constructor(
     private val _home = MutableStateFlow<SimpleSubmittableState<SimpleModel>?>(null)
     val home = _home.asStateFlow()
 
+    private val _navigateToTopProduct = MutableSharedFlow<SimpleModel>()
+    val navigateToTopProduct = _navigateToTopProduct.asSharedFlow()
+    
     private val _navigateToBanner = MutableSharedFlow<SimpleModel>()
     val navigateToBanner = _navigateToBanner.asSharedFlow()
 
     private val _navigateToDeposit = MutableSharedFlow<SimpleModel>()
     val navigateToDeposit = _navigateToDeposit.asSharedFlow()
 
-    private lateinit var summary: DepositsHorizontal<SimpleModel>
+    private lateinit var topDeposit: DepositHorizontal<SimpleModel>
     private lateinit var banners: Banners<SimpleModel>
-    private lateinit var depositsHorizontal: DepositsVertical<SimpleModel>
+    private lateinit var deposit: DepositGrid<SimpleModel>
 
     fun load() {
         if(isInitialized()) {
@@ -68,13 +71,13 @@ class HomeViewModel @Inject constructor(
             it.isErrorOrNull()?.let { e ->
                 _errorState.value = e
             } ?: run {
-                summary = DepositsHorizontal(it.getValue().title, SimpleSubmittableState<SimpleModel>().apply {
+                topDeposit = DepositHorizontal(it.getValue().title, SimpleSubmittableState<SimpleModel>().apply {
                     submitList(it.getValue().deposits.map { deposit ->
-                        SummaryDepositSmall(deposit.uid, deposit.bankCode, deposit.title, deposit.description, deposit.maxRate, deposit.minRate,  ::onDepositClickListener)
+                        TopDeposit(deposit.uid, deposit.bankCode, deposit.title, deposit.description, deposit.maxRate, deposit.minRate, ::onTopDepositClickListener)
                     })
                 })
 
-                merge(summary)
+                merge(topDeposit)
             }
         }.collect()
     }
@@ -104,13 +107,12 @@ class HomeViewModel @Inject constructor(
             it.isErrorOrNull()?.let {
 
             } ?: run {
-                depositsHorizontal = DepositsVertical(it.getValue().title, SimpleSubmittableState<SimpleModel>().apply {
-                    submitList(it.getValue().deposits.map { deposit ->
-                        SummaryDepositNormal(deposit.uid, deposit.bankCode, deposit.title, deposit.description, deposit.maxRate, deposit.minRate, :: onDepositClickListener)
+                deposit = DepositGrid(it.getValue().title, SimpleSubmittableState<SimpleModel>().apply {
+                    submitList(it.getValue().deposits.map { _deposit ->
+                        Deposit(_deposit.uid, _deposit.bankCode, _deposit.title, _deposit.description, _deposit.maxRate, _deposit.minRate, ::onDepositClickListener)
                     })
                 })
-
-                merge(depositsHorizontal)
+                merge(deposit)
             }
         }.collect()
     }
@@ -124,6 +126,12 @@ class HomeViewModel @Inject constructor(
             _home.value = SimpleSubmittableState<SimpleModel>().apply {
                 submitList(listOf(model))
             }
+        }
+    }
+    
+    private fun onTopDepositClickListener(model: SimpleModel) {
+        viewModelScope.launch {
+            _navigateToTopProduct.emit(model)
         }
     }
 

@@ -16,13 +16,11 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.navGraphViewModels
 import com.wantique.base.ui.BaseFragment
 import com.wantique.home.R
-import com.wantique.home.data.repository.HomeRepositoryImpl
 import com.wantique.home.databinding.FragmentHomeBinding
 import com.wantique.home.di.HomeComponentProvider
-import com.wantique.home.ui.home.model.SummaryDepositNormal
-import com.wantique.home.ui.home.model.SummaryDepositSmall
+import com.wantique.home.ui.home.model.Deposit
+import com.wantique.home.ui.home.model.TopDeposit
 import com.wantique.resource.Constant
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -89,12 +87,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
      * 다른 화면으로 navigate 할 경우 Fragment 의 View 는 파괴되며 viewLifecycleOwner 범위에서 실행된 Coroutine 도 종료되게 되어서 2개의 Coroutine 이 Flow 를 collect 하는 문제를 방지할 수 있다.
      * */
     private fun setUpNavigateListener() {
+        viewLifecycleOwner.lifecycleScope.launch { 
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.navigateToTopProduct.collect {
+                    if(it is TopDeposit) {
+                        navigator.navigate(HomeFragmentDirections.actionHomeFragmentToDepositFragment(it.uid))
+                    }
+                }
+            }
+        }
+        
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.navigateToDeposit.collect {
-                    when(it) {
-                        is SummaryDepositSmall -> navigator.navigate(HomeFragmentDirections.actionHomeFragmentToDepositFragment(it.uid))
-                        is SummaryDepositNormal -> navigator.navigate(HomeFragmentDirections.actionHomeFragmentToDepositFragment(it.uid))
+                    if(it is Deposit) {
+                        navigator.navigate(HomeFragmentDirections.actionHomeFragmentToDepositFragment(it.uid))
                     }
                 }
             }
@@ -107,6 +114,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                 }
             }
         }
+        
+        
     }
 
     override fun onDestroyView() {
