@@ -11,6 +11,7 @@ interface HomeRepository {
     fun getHighestDepositByBank(): Flow<Resource<DepositsDto>>
     fun getHomeBanner(): Flow<Resource<BannersDto>>
     fun getAllDepositProduct(): Flow<Resource<DepositsDto>>
+    fun getDepositProduct(): Flow<Resource<DepositsDto>>
     fun getDepositHeader(uid: String): Flow<Resource<DepositHeaderDto>>
     fun getDepositBody(uid: String): Flow<Resource<DepositBodyDto>>
 }

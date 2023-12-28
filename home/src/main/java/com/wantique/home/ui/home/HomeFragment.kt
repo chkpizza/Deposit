@@ -115,7 +115,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             }
         }
         
-        
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.navigateToMoreDeposit.collect {
+                    Toast.makeText(requireActivity(), "Deposit More View", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {

@@ -1,5 +1,6 @@
 package com.wantique.home.data.repository
 
+import android.util.Log
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.toObject
@@ -54,6 +55,19 @@ class HomeRepositoryImpl @Inject constructor(
                 if(isEmpty()) {
                     emit(Resource.Error(EmptyListException()))
                 } else {
+                    emit(Resource.Success(DepositsDto(titleDto.title!!, this)))
+                }
+            }
+        } ?: emit(Resource.Error(EmptyListException()))
+    }
+
+    override fun getDepositProduct(): Flow<Resource<DepositsDto>> = flow {
+        Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_TITLE_DOCUMENT).get().await().toObject<TitleDto>()?.let { titleDto ->
+            Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_DOCUMENT).collection(Constant.SUMMARY_COLLECTION).limit(4).get().await().toObjects<DepositDto>().run {
+                if(isEmpty()) {
+                    emit(Resource.Error(EmptyListException()))
+                } else {
+                    Log.d("limitTest", this.toString())
                     emit(Resource.Success(DepositsDto(titleDto.title!!, this)))
                 }
             }

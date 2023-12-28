@@ -7,7 +7,8 @@ import com.wantique.home.R
 
 data class DepositGrid<ITEM: SimpleModel>(
     val title: String,
-    val simpleSubmittableState: SimpleSubmittableState<ITEM>
+    val simpleSubmittableState: SimpleSubmittableState<ITEM>,
+    val onClickListener: () -> Unit
 ) : SimpleModel {
     override fun layoutId(): Int = R.layout.view_holder_deposit_grid
     override fun bindingVariableIds(): Map<String, Int> {

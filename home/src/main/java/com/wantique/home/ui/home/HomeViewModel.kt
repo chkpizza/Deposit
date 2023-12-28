@@ -9,6 +9,7 @@ import com.wantique.base.ui.SimpleSubmittableState
 import com.wantique.base.ui.getValue
 import com.wantique.base.ui.isErrorOrNull
 import com.wantique.home.domain.usecase.GetAllDepositProductUseCase
+import com.wantique.home.domain.usecase.GetDepositProductUseCase
 import com.wantique.home.domain.usecase.GetHighestDepositByBankUseCase
 import com.wantique.home.domain.usecase.GetHomeBannerUseCase
 import com.wantique.home.ui.home.model.Banner
@@ -29,7 +30,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getHighestDepositByBankUseCase: GetHighestDepositByBankUseCase,
     private val getHomeBannerUseCase: GetHomeBannerUseCase,
-    private val getAllDepositProductUseCase: GetAllDepositProductUseCase,
+    private val getDepositProductUseCase: GetDepositProductUseCase,
     networkStateTracker: NetworkStateTracker,
     context: Context
 ) : BaseViewModel(networkStateTracker, context) {
@@ -45,6 +46,9 @@ class HomeViewModel @Inject constructor(
     private val _navigateToDeposit = MutableSharedFlow<SimpleModel>()
     val navigateToDeposit = _navigateToDeposit.asSharedFlow()
 
+    private val _navigateToMoreDeposit = MutableSharedFlow<Unit>()
+    val navigateToMoreDeposit = _navigateToMoreDeposit.asSharedFlow()
+
     private lateinit var topDeposit: DepositHorizontal<SimpleModel>
     private lateinit var bannerHorizontal: BannerHorizontal<SimpleModel>
     private lateinit var deposit: DepositGrid<SimpleModel>
@@ -56,7 +60,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             getHighestDeposit()
             getHomeBanner()
-            getAllDepositProduct()
+            getDepositProduct()
         }
     }
 
@@ -100,9 +104,9 @@ class HomeViewModel @Inject constructor(
         }.collect()
     }
 
-    private suspend fun getAllDepositProduct() {
+    private suspend fun getDepositProduct() {
         safeFlow {
-            getAllDepositProductUseCase()
+            getDepositProductUseCase()
         }.onEach {
             it.isErrorOrNull()?.let {
 
@@ -111,7 +115,7 @@ class HomeViewModel @Inject constructor(
                     submitList(it.getValue().deposits.map { _deposit ->
                         Deposit(_deposit.uid, _deposit.bankCode, _deposit.title, _deposit.description, _deposit.maxRate, _deposit.minRate, ::onDepositClickListener)
                     })
-                })
+                }, ::onMoreDepositClickListener)
                 merge(deposit)
             }
         }.collect()
@@ -144,6 +148,12 @@ class HomeViewModel @Inject constructor(
     private fun onDepositClickListener(model: SimpleModel) {
         viewModelScope.launch {
             _navigateToDeposit.emit(model)
+        }
+    }
+
+    private fun onMoreDepositClickListener() {
+        viewModelScope.launch {
+            _navigateToMoreDeposit.emit(Unit)
         }
     }
 }
