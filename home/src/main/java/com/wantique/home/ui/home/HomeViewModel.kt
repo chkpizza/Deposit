@@ -8,13 +8,12 @@ import com.wantique.base.ui.SimpleModel
 import com.wantique.base.ui.SimpleSubmittableState
 import com.wantique.base.ui.getValue
 import com.wantique.base.ui.isErrorOrNull
-import com.wantique.home.domain.usecase.GetAllDepositProductUseCase
 import com.wantique.home.domain.usecase.GetDepositProductUseCase
 import com.wantique.home.domain.usecase.GetHighestDepositByBankUseCase
 import com.wantique.home.domain.usecase.GetHomeBannerUseCase
 import com.wantique.home.ui.home.model.Banner
 import com.wantique.home.ui.home.model.BannerHorizontal
-import com.wantique.home.ui.home.model.Deposit
+import com.wantique.home.ui.home.model.DepositPreview
 import com.wantique.home.ui.home.model.DepositGrid
 import com.wantique.home.ui.home.model.DepositHorizontal
 import com.wantique.home.ui.home.model.TopDeposit
@@ -113,7 +112,7 @@ class HomeViewModel @Inject constructor(
             } ?: run {
                 deposit = DepositGrid(it.getValue().title, SimpleSubmittableState<SimpleModel>().apply {
                     submitList(it.getValue().deposits.map { _deposit ->
-                        Deposit(_deposit.uid, _deposit.bankCode, _deposit.title, _deposit.description, _deposit.maxRate, _deposit.minRate, ::onDepositClickListener)
+                        DepositPreview(_deposit.uid, _deposit.bankCode, _deposit.title, _deposit.description, _deposit.maxRate, _deposit.minRate, ::onDepositClickListener)
                     })
                 }, ::onMoreDepositClickListener)
                 merge(deposit)

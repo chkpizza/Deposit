@@ -1,6 +1,7 @@
 package com.wantique.home.di
 
 import com.wantique.base.di.FeatureScope
+import com.wantique.home.ui.deposit.DepositFragment
 import com.wantique.home.ui.detail.DetailFragment
 import com.wantique.home.ui.home.HomeFragment
 import dagger.Subcomponent
@@ -15,4 +16,5 @@ interface HomeComponent {
 
     fun inject(fragment: HomeFragment)
     fun inject(fragment: DetailFragment)
+    fun inject(fragment: DepositFragment)
 }

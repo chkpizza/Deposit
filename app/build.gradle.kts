@@ -48,6 +48,7 @@ dependencies {
     implementation(project(":auth"))
     implementation(project(":home"))
     implementation(project(":base"))
+    implementation(project(":resource"))
 
     implementation(AndroidX.CORE)
     implementation(AndroidX.APP_COMAPT)

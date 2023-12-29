@@ -138,6 +138,11 @@ fun TextView.setUnderlineText(text: String) {
     setText(text)
 }
 
+@BindingAdapter("filter")
+fun TextView.setFilter(filter: Int) {
+    text = resources.getStringArray(com.wantique.resource.R.array.product_filter_title)[filter]
+}
+
 @BindingAdapter("error_handler")
 fun ViewGroup.setErrorHandler(e: Throwable?) {
     e?.let {

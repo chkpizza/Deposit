@@ -18,7 +18,7 @@ import com.wantique.base.ui.BaseFragment
 import com.wantique.home.R
 import com.wantique.home.databinding.FragmentHomeBinding
 import com.wantique.home.di.HomeComponentProvider
-import com.wantique.home.ui.home.model.Deposit
+import com.wantique.home.ui.home.model.DepositPreview
 import com.wantique.home.ui.home.model.TopDeposit
 import com.wantique.resource.Constant
 import kotlinx.coroutines.launch
@@ -91,7 +91,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.navigateToTopProduct.collect {
                     if(it is TopDeposit) {
-                        navigator.navigate(HomeFragmentDirections.actionHomeFragmentToDepositFragment(it.uid))
+                        navigator.navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(it.uid))
                     }
                 }
             }
@@ -100,8 +100,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.navigateToDeposit.collect {
-                    if(it is Deposit) {
-                        navigator.navigate(HomeFragmentDirections.actionHomeFragmentToDepositFragment(it.uid))
+                    if(it is DepositPreview) {
+                        navigator.navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(it.uid))
                     }
                 }
             }
@@ -118,7 +118,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.navigateToMoreDeposit.collect {
-                    Toast.makeText(requireActivity(), "Deposit More View", Toast.LENGTH_SHORT).show()
+                    navigator.navigate(HomeFragmentDirections.actionHomeFragmentToDepositFragment())
                 }
             }
         }
