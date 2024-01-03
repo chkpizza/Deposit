@@ -3,6 +3,7 @@
     <style name="Base.Theme.Deposit" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialog</item>
     </style>
 
     <style name="Theme.Deposit" parent="Base.Theme.Deposit" >

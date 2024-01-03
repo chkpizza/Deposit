@@ -6,25 +6,25 @@
     <data>
         <variable
             name="vm"
-            type="com.wantique.home.ui.deposit.DepositViewModel" />
+            type="com.wantique.home.ui.detail.DetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.deposit.DepositFragment">
+        tools:context=".ui.detail.DetailFragment">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/deposit_rv"
+            android:id="@+id/deposit_rv_detail"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:simple_submittable_state="@{vm.deposit}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
+            app:simple_submittable_state="@{vm.detail}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="vertical"/>
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

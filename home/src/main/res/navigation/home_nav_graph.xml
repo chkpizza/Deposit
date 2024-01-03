@@ -11,15 +11,37 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
+            android:id="@+id/action_homeFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+        <action
             android:id="@+id/action_homeFragment_to_depositFragment"
             app:destination="@id/depositFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_savingFragment"
+            app:destination="@id/savingFragment" />
     </fragment>
     <fragment
-        android:id="@+id/depositFragment"
-        android:name="com.wantique.home.ui.detail.DepositFragment"
+        android:id="@+id/detailFragment"
+        android:name="com.wantique.home.ui.detail.DetailFragment"
         android:label="DepositFragment" >
         <argument
             android:name="uid"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/depositFragment"
+        android:name="com.wantique.home.ui.deposit.DepositFragment"
+        android:label="DepositFragment" >
+        <action
+            android:id="@+id/action_depositFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/savingFragment"
+        android:name="com.wantique.home.ui.saving.SavingFragment"
+        android:label="SavingFragment" >
+        <action
+            android:id="@+id/action_savingFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
     </fragment>
 </navigation>

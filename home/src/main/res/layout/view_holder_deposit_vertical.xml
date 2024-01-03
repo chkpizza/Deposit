@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="model"
+            type="com.wantique.home.ui.deposit.model.DepositVertical" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/deposit_tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:background="#E9E9E9"
+            android:text="@{model.title}"
+            android:fontFamily="@font/pretendard_bold"
+            android:paddingStart="16dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:textColor="@color/main_text"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/deposit_btn_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/deposit_tv_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="16dp"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:drawablePadding="4dp"
+            app:filter="@{model.filter}"
+            android:onClick="@{()->model.onClickListener.invoke()}"
+            android:textColor="@color/main_text"
+            android:fontFamily="@font/pretendard_bold"
+            app:drawableStartCompat="@drawable/ic_filter" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/deposit_rv_product"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:simple_submittable_state="@{model.simpleSubmittableState}"
+            app:layout_constraintTop_toBottomOf="@id/deposit_btn_filter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

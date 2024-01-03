@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class DepositViewModel @Inject constructor(
+class DetailViewModel @Inject constructor(
     private val getDepositHeaderUseCase: GetDepositHeaderUseCase,
     private val getDepositBodyUseCase: GetDepositBodyUseCase,
     networkStateTracker: NetworkStateTracker,

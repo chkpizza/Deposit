@@ -1,4 +1,4 @@
-package com.wantique.home.ui.home.model
+package com.wantique.home.ui.deposit.model
 
 import com.wantique.base.ui.SimpleModel
 import com.wantique.home.BR

@@ -13,6 +13,7 @@ object Constant {
     const val DEPOSIT_DOCUMENT = "deposit"
     const val DEPOSIT_TOP_TITLE_DOCUMENT = "deposit_top_title"
     const val DEPOSIT_TITLE_DOCUMENT = "deposit_title"
+    const val SAVING_TITLE_DOCUMENT = "saving_title"
     const val NH_BANK_CODE = 1
     const val KB_BANK_CODE = 2
     const val SHINHAN_BANK_CODE = 3

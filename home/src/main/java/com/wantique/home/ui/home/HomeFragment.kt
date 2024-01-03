@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.updatePadding
 import androidx.lifecycle.Lifecycle
@@ -18,11 +19,14 @@ import com.wantique.base.ui.BaseFragment
 import com.wantique.home.R
 import com.wantique.home.databinding.FragmentHomeBinding
 import com.wantique.home.di.HomeComponentProvider
-import com.wantique.home.ui.home.model.Deposit
+import com.wantique.home.ui.home.model.DepositPreview
+import com.wantique.home.ui.home.model.SavingPreview
 import com.wantique.home.ui.home.model.TopDeposit
 import com.wantique.resource.Constant
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.system.exitProcess
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     @Inject lateinit var factory: ViewModelProvider.Factory
@@ -36,6 +40,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         (context.applicationContext as HomeComponentProvider).getHomeComponent().inject(this)
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,7 +52,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                     clickTime = System.currentTimeMillis()
                     Toast.makeText(requireActivity(), getString(com.wantique.resource.R.string.home_back_press_notice), Toast.LENGTH_SHORT).show()
                 } else {
-                    requireActivity().finish()
+                    exit()
                 }
             }
         }
@@ -55,6 +60,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -91,17 +98,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.navigateToTopProduct.collect {
                     if(it is TopDeposit) {
-                        navigator.navigate(HomeFragmentDirections.actionHomeFragmentToDepositFragment(it.uid))
-                    }
-                }
-            }
-        }
-        
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.navigateToDeposit.collect {
-                    if(it is Deposit) {
-                        navigator.navigate(HomeFragmentDirections.actionHomeFragmentToDepositFragment(it.uid))
+                        navigator.navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(it.uid))
                     }
                 }
             }
@@ -114,8 +111,48 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                 }
             }
         }
-        
-        
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.navigateToDeposit.collect {
+                    if(it is DepositPreview) {
+                        navigator.navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(it.uid))
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.navigateToMoreDeposit.collect {
+                    navigator.navigate(HomeFragmentDirections.actionHomeFragmentToDepositFragment())
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.navigateToSaving.collect {
+                    if(it is SavingPreview) {
+                        navigator.navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(it.uid))
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.navigateToMoreSaving.collect {
+                    navigator.navigate(HomeFragmentDirections.actionHomeFragmentToSavingFragment())
+                }
+            }
+        }
+    }
+
+    private fun exit() {
+        ActivityCompat.finishAffinity(requireActivity())
+        System.runFinalization()
+        exitProcess(0)
     }
 
     override fun onDestroyView() {

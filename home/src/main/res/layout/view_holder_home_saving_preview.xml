@@ -3,84 +3,82 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="model"
-            type="com.wantique.home.ui.deposit.model.Deposit" />
+            type="com.wantique.home.ui.home.model.SavingPreview" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{()->model.onClickListener.invoke(model)}"
         app:cardElevation="0dp"
-        app:strokeWidth="0dp"
-        android:onClick="@{()->model.onClickListener.invoke(model)}">
+        app:strokeWidth="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
 
             <ImageView
-                android:id="@+id/deposit_iv_icon"
+                android:id="@+id/savings_iv_icon"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                app:load_bank_icon="@{model.bankCode}"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:load_bank_icon="@{model.bankCode}" />
 
             <TextView
-                android:id="@+id/deposit_tv_name"
+                android:id="@+id/savings_tv_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="16dp"
                 android:fontFamily="@font/pretendard_medium"
+                android:text="@{model.title}"
                 android:textColor="@color/main_text"
                 android:textSize="15sp"
-                android:text="@{model.title}"
+                app:layout_constraintStart_toEndOf="@id/savings_iv_icon"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/deposit_iv_icon"
-                app:layout_constraintTop_toTopOf="@id/deposit_iv_icon" />
+                app:layout_constraintTop_toTopOf="@id/savings_iv_icon" />
 
             <TextView
-                android:id="@+id/deposit_tv_description"
+                android:id="@+id/savings_tv_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/pretendard_medium"
+                android:text="@{model.description}"
                 android:textColor="@color/sub_text"
                 android:textSize="13sp"
-                android:text="@{model.description}"
-                app:layout_constraintEnd_toEndOf="@id/deposit_tv_name"
-                app:layout_constraintStart_toStartOf="@id/deposit_tv_name"
-                app:layout_constraintTop_toBottomOf="@id/deposit_tv_name" />
+                app:layout_constraintEnd_toEndOf="@id/savings_tv_title"
+                app:layout_constraintStart_toStartOf="@id/savings_tv_title"
+                app:layout_constraintTop_toBottomOf="@id/savings_tv_title" />
 
             <TextView
-                android:id="@+id/deposit_tv_interest_rate"
+                android:id="@+id/savings_tv_max_rate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:textSize="14sp"
-                app:underline_text="@{@string/formatted_interest_rate_(model.maxRate, model.minRate)}"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/pretendard_medium"
                 android:textColor="@color/main_text"
-                app:layout_constraintTop_toBottomOf="@id/deposit_tv_description"
-                app:layout_constraintEnd_toEndOf="@id/deposit_tv_name"/>
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/savings_tv_description"
+                app:underline_text="@{@string/formatted_interest_rate(model.maxRate)}" />
 
             <View
-                android:id="@+id/deposit_view_divide"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                app:layout_constraintTop_toBottomOf="@id/deposit_tv_interest_rate"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginTop="20dp"
                 android:background="@color/divider"
-                android:layout_marginTop="20dp" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/savings_tv_max_rate" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
