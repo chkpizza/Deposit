@@ -52,9 +52,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                     clickTime = System.currentTimeMillis()
                     Toast.makeText(requireActivity(), getString(com.wantique.resource.R.string.home_back_press_notice), Toast.LENGTH_SHORT).show()
                 } else {
-                    ActivityCompat.finishAffinity(requireActivity())
-                    System.runFinalization()
-                    exitProcess(0)
+                    exit()
                 }
             }
         }
@@ -149,6 +147,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                 }
             }
         }
+    }
+
+    private fun exit() {
+        ActivityCompat.finishAffinity(requireActivity())
+        System.runFinalization()
+        exitProcess(0)
     }
 
     override fun onDestroyView() {
