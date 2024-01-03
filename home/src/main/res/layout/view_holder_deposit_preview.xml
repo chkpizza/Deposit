@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="model"
             type="com.wantique.home.ui.home.model.DepositPreview" />
@@ -13,12 +14,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="4dp"
-        android:onClick="@{()->model.onClickListener.invoke(model)}">
+        android:layout_marginEnd="4dp">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:onClick="@{()->model.onClickListener.invoke(model)}"
             app:cardCornerRadius="8dp"
             app:cardElevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -39,9 +40,9 @@
                     android:layout_height="36dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    app:load_bank_icon="@{model.bankCode}"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:load_bank_icon="@{model.bankCode}" />
 
                 <TextView
                     android:id="@+id/deposit_tv_name"
@@ -50,8 +51,8 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:text="@{model.title}"
                     android:fontFamily="@font/pretendard_medium"
+                    android:text="@{model.title}"
                     android:textColor="@color/main_text"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -64,9 +65,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:ellipsize="end"
-                    android:text="@{model.description}"
                     android:fontFamily="@font/pretendard_medium"
                     android:maxLines="2"
+                    android:text="@{model.description}"
                     android:textColor="@color/sub_text"
                     android:textSize="13sp"
                     app:layout_constraintEnd_toEndOf="@id/deposit_tv_name"
@@ -82,9 +83,9 @@
                     android:fontFamily="@font/pretendard_medium"
                     android:textColor="@color/sub_text"
                     android:textSize="12sp"
-                    app:underline_text="@{@string/formatted_interest_rate(model.maxRate)}"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:underline_text="@{@string/formatted_interest_rate(model.maxRate)}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

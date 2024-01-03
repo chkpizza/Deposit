@@ -11,11 +11,14 @@ import com.wantique.base.ui.isErrorOrNull
 import com.wantique.home.domain.usecase.GetDepositProductUseCase
 import com.wantique.home.domain.usecase.GetHighestDepositByBankUseCase
 import com.wantique.home.domain.usecase.GetHomeBannerUseCase
+import com.wantique.home.domain.usecase.GetSavingProductUseCase
 import com.wantique.home.ui.home.model.Banner
 import com.wantique.home.ui.home.model.BannerHorizontal
 import com.wantique.home.ui.home.model.DepositPreview
 import com.wantique.home.ui.home.model.DepositGrid
 import com.wantique.home.ui.home.model.DepositHorizontal
+import com.wantique.home.ui.home.model.SavingPreview
+import com.wantique.home.ui.home.model.SavingVertical
 import com.wantique.home.ui.home.model.TopDeposit
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,6 +33,7 @@ class HomeViewModel @Inject constructor(
     private val getHighestDepositByBankUseCase: GetHighestDepositByBankUseCase,
     private val getHomeBannerUseCase: GetHomeBannerUseCase,
     private val getDepositProductUseCase: GetDepositProductUseCase,
+    private val getSavingProductUseCase: GetSavingProductUseCase,
     networkStateTracker: NetworkStateTracker,
     context: Context
 ) : BaseViewModel(networkStateTracker, context) {
@@ -48,9 +52,16 @@ class HomeViewModel @Inject constructor(
     private val _navigateToMoreDeposit = MutableSharedFlow<Unit>()
     val navigateToMoreDeposit = _navigateToMoreDeposit.asSharedFlow()
 
+    private val _navigateToSaving = MutableSharedFlow<SimpleModel>()
+    val navigateToSaving = _navigateToSaving.asSharedFlow()
+
+    private val _navigateToMoreSaving = MutableSharedFlow<Unit>()
+    val navigateToMoreSaving = _navigateToMoreSaving.asSharedFlow()
+
     private lateinit var topDeposit: DepositHorizontal<SimpleModel>
     private lateinit var bannerHorizontal: BannerHorizontal<SimpleModel>
     private lateinit var deposit: DepositGrid<SimpleModel>
+    private lateinit var savings: SavingVertical<SimpleModel>
 
     fun load() {
         if(isInitialized()) {
@@ -60,6 +71,7 @@ class HomeViewModel @Inject constructor(
             getHighestDeposit()
             getHomeBanner()
             getDepositProduct()
+            getSavingProduct()
         }
     }
 
@@ -120,6 +132,24 @@ class HomeViewModel @Inject constructor(
         }.collect()
     }
 
+    private suspend fun getSavingProduct() {
+        safeFlow {
+            getSavingProductUseCase()
+        }.onEach {
+            it.isErrorOrNull()?.let { e ->
+                _errorState.value = e
+            } ?: run {
+                savings = SavingVertical(it.getValue().title, SimpleSubmittableState<SimpleModel>().apply {
+                    submitList(it.getValue().savings.map { saving ->
+                        SavingPreview(saving.uid, saving.bankCode, saving.title, saving.description, saving.maxRate, saving.minRate, ::onSavingClickListener)
+                    })
+                }, ::onMoreSavingClickListener)
+
+                merge(savings)
+            }
+        }.collect()
+    }
+
     private fun merge(model: SimpleModel) {
         _home.value?.let {
             it.submitList(it.getCurrentList().toMutableList().apply {
@@ -153,6 +183,18 @@ class HomeViewModel @Inject constructor(
     private fun onMoreDepositClickListener() {
         viewModelScope.launch {
             _navigateToMoreDeposit.emit(Unit)
+        }
+    }
+
+    private fun onSavingClickListener(model: SimpleModel) {
+        viewModelScope.launch {
+            _navigateToSaving.emit(model)
+        }
+    }
+
+    private fun onMoreSavingClickListener() {
+        viewModelScope.launch {
+            _navigateToMoreSaving.emit(Unit)
         }
     }
 }

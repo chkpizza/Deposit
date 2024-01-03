@@ -15,6 +15,8 @@ import com.wantique.home.data.model.DepositBodyDto
 import com.wantique.home.data.model.DepositDto
 import com.wantique.home.data.model.DepositHeaderDto
 import com.wantique.home.data.model.DepositsDto
+import com.wantique.home.data.model.SavingDto
+import com.wantique.home.data.model.SavingsDto
 import com.wantique.home.data.model.TitleDto
 import com.wantique.home.domain.repository.HomeRepository
 import com.wantique.resource.Constant
@@ -83,5 +85,17 @@ class HomeRepositoryImpl @Inject constructor(
         Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_DOCUMENT).collection(Constant.BODY_COLLECTION).document(uid).get().await().toObject<DepositBodyDto>()?.let {
             emit(Resource.Success(it))
         } ?: emit(Resource.Error(DepositNotFoundException()))
+    }
+
+    override fun getSavingProduct(): Flow<Resource<SavingsDto>> = flow {
+        Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.SAVING_TITLE_DOCUMENT).get().await().toObject<TitleDto>()?.let { titleDto ->
+            Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_DOCUMENT).collection(Constant.SUMMARY_COLLECTION).get().await().toObjects<SavingDto>().run {
+                if(isEmpty()) {
+                    emit(Resource.Error(EmptyListException()))
+                } else {
+                    emit(Resource.Success(SavingsDto(titleDto.title!!, shuffled().take(6))))
+                }
+            }
+        } ?: emit(Resource.Error(EmptyListException()))
     }
 }
