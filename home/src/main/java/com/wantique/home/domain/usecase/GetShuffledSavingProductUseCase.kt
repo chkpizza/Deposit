@@ -6,10 +6,10 @@ import com.wantique.home.domain.repository.HomeRepository
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class GetDepositProductUseCase @Inject constructor(
+class GetShuffledSavingProductUseCase @Inject constructor(
     private val homeRepository: HomeRepository
 ) {
-    operator fun invoke() = homeRepository.getDepositProduct().map {
+    operator fun invoke() = homeRepository.getShuffledSavingProduct().map {
         when(it) {
             is Resource.Success -> UiState.Success(it.data.asDomain())
             is Resource.Error -> UiState.Error(it.error)

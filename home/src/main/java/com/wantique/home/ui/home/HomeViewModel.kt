@@ -8,10 +8,10 @@ import com.wantique.base.ui.SimpleModel
 import com.wantique.base.ui.SimpleSubmittableState
 import com.wantique.base.ui.getValue
 import com.wantique.base.ui.isErrorOrNull
-import com.wantique.home.domain.usecase.GetDepositProductUseCase
+import com.wantique.home.domain.usecase.GetShuffledDepositProductUseCase
 import com.wantique.home.domain.usecase.GetHighestDepositByBankUseCase
 import com.wantique.home.domain.usecase.GetHomeBannerUseCase
-import com.wantique.home.domain.usecase.GetSavingProductUseCase
+import com.wantique.home.domain.usecase.GetShuffledSavingProductUseCase
 import com.wantique.home.ui.home.model.Banner
 import com.wantique.home.ui.home.model.BannerHorizontal
 import com.wantique.home.ui.home.model.DepositPreview
@@ -32,8 +32,8 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getHighestDepositByBankUseCase: GetHighestDepositByBankUseCase,
     private val getHomeBannerUseCase: GetHomeBannerUseCase,
-    private val getDepositProductUseCase: GetDepositProductUseCase,
-    private val getSavingProductUseCase: GetSavingProductUseCase,
+    private val getShuffledDepositProductUseCase: GetShuffledDepositProductUseCase,
+    private val getShuffledSavingProductUseCase: GetShuffledSavingProductUseCase,
     networkStateTracker: NetworkStateTracker,
     context: Context
 ) : BaseViewModel(networkStateTracker, context) {
@@ -117,7 +117,7 @@ class HomeViewModel @Inject constructor(
 
     private suspend fun getDepositProduct() {
         safeFlow {
-            getDepositProductUseCase()
+            getShuffledDepositProductUseCase()
         }.onEach {
             it.isErrorOrNull()?.let {
 
@@ -134,7 +134,7 @@ class HomeViewModel @Inject constructor(
 
     private suspend fun getSavingProduct() {
         safeFlow {
-            getSavingProductUseCase()
+            getShuffledSavingProductUseCase()
         }.onEach {
             it.isErrorOrNull()?.let { e ->
                 _errorState.value = e

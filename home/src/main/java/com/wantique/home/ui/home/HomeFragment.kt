@@ -23,7 +23,6 @@ import com.wantique.home.ui.home.model.DepositPreview
 import com.wantique.home.ui.home.model.SavingPreview
 import com.wantique.home.ui.home.model.TopDeposit
 import com.wantique.resource.Constant
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.system.exitProcess
