@@ -20,6 +20,7 @@ import com.wantique.home.databinding.FragmentDepositBinding
 import com.wantique.home.di.HomeComponentProvider
 import com.wantique.home.ui.deposit.model.Deposit
 import com.wantique.home.ui.deposit.model.DepositFilter
+import com.wantique.resource.Constant
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -60,7 +61,7 @@ class DepositFragment : BaseFragment<FragmentDepositBinding>(R.layout.fragment_d
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.navigateToDetail.collect {
                     if(it is Deposit) {
-                        navigator.navigate(DepositFragmentDirections.actionDepositFragmentToDetailFragment(it.uid))
+                        navigator.navigate(DepositFragmentDirections.actionDepositFragmentToDetailFragment(it.uid, Constant.DEPOSIT))
                     }
                 }
             }

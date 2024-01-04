@@ -5,8 +5,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.toObject
 import com.google.firebase.firestore.toObjects
 import com.google.firebase.ktx.Firebase
-import com.wantique.base.exception.DepositNotFoundException
 import com.wantique.base.exception.EmptyListException
+import com.wantique.base.exception.ProductNotFoundException
 import com.wantique.base.network.Resource
 import com.wantique.home.data.model.BannerDto
 import com.wantique.home.data.model.BannersDto
@@ -14,7 +14,9 @@ import com.wantique.home.data.model.DepositBodyDto
 import com.wantique.home.data.model.DepositDto
 import com.wantique.home.data.model.DepositHeaderDto
 import com.wantique.home.data.model.DepositsDto
+import com.wantique.home.data.model.SavingBodyDto
 import com.wantique.home.data.model.SavingDto
+import com.wantique.home.data.model.SavingHeaderDto
 import com.wantique.home.data.model.SavingsDto
 import com.wantique.home.data.model.TitleDto
 import com.wantique.home.domain.repository.HomeRepository
@@ -77,13 +79,13 @@ class HomeRepositoryImpl @Inject constructor(
     override fun getDepositHeader(uid: String): Flow<Resource<DepositHeaderDto>> = flow {
         Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_DOCUMENT).collection(Constant.HEADER_COLLECTION).document(uid).get().await().toObject<DepositHeaderDto>()?.let {
             emit(Resource.Success(it))
-        } ?: emit(Resource.Error(DepositNotFoundException()))
+        } ?: emit(Resource.Error(ProductNotFoundException()))
     }
 
     override fun getDepositBody(uid: String): Flow<Resource<DepositBodyDto>> = flow {
         Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.DEPOSIT_DOCUMENT).collection(Constant.BODY_COLLECTION).document(uid).get().await().toObject<DepositBodyDto>()?.let {
             emit(Resource.Success(it))
-        } ?: emit(Resource.Error(DepositNotFoundException()))
+        } ?: emit(Resource.Error(ProductNotFoundException()))
     }
 
     override fun getShuffledSavingProduct(): Flow<Resource<SavingsDto>> = flow {
@@ -96,5 +98,17 @@ class HomeRepositoryImpl @Inject constructor(
                 }
             }
         } ?: emit(Resource.Error(EmptyListException()))
+    }
+
+    override fun getSavingHeader(uid: String): Flow<Resource<SavingHeaderDto>> = flow {
+        Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.SAVING_DOCUMENT).collection(Constant.HEADER_COLLECTION).document(uid).get().await().toObject<SavingHeaderDto>()?.let {
+            emit(Resource.Success(it))
+        } ?: emit(Resource.Error(ProductNotFoundException()))
+    }
+
+    override fun getSavingBody(uid: String): Flow<Resource<SavingBodyDto>> = flow {
+        Firebase.firestore.collection(Constant.BANK_COLLECTION).document(Constant.SAVING_DOCUMENT).collection(Constant.BODY_COLLECTION).document(uid).get().await().toObject<SavingBodyDto>()?.let {
+            emit(Resource.Success(it))
+        } ?: emit(Resource.Error(ProductNotFoundException()))
     }
 }

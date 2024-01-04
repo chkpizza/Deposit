@@ -17,12 +17,14 @@ import com.wantique.home.R
 import com.wantique.home.databinding.FragmentDetailBinding
 import com.wantique.home.di.HomeComponentProvider
 import com.wantique.home.ui.detail.model.DepositBody
+import com.wantique.home.ui.detail.model.SavingBody
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class DetailFragment : BaseFragment<FragmentDetailBinding>(R.layout.fragment_detail) {
     private val args: DetailFragmentArgs by navArgs()
     private val uid by lazy { args.uid }
+    private val type by lazy { args.type }
 
     @Inject lateinit var factory: ViewModelProvider.Factory
     private val viewModel by lazy { ViewModelProvider(this, factory)[DetailViewModel::class.java]}
@@ -41,7 +43,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(R.layout.fragment_det
         setupInsets()
         setUpNavigateListener()
 
-        viewModel.load(uid)
+        viewModel.load(uid, type)
     }
 
     private fun setupInsets() {
@@ -57,9 +59,12 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>(R.layout.fragment_det
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.navigateToDetail.collect {
-                    (it as? DepositBody)?.let { body ->
-                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(body.url)))
+                    val url = when(it) {
+                        is DepositBody -> it.url
+                        is SavingBody -> it.url
+                        else -> ""
                     }
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
                 }
             }
         }

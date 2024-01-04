@@ -5,6 +5,8 @@ import com.wantique.home.data.model.BannersDto
 import com.wantique.home.data.model.DepositBodyDto
 import com.wantique.home.data.model.DepositHeaderDto
 import com.wantique.home.data.model.DepositsDto
+import com.wantique.home.data.model.SavingBodyDto
+import com.wantique.home.data.model.SavingHeaderDto
 import com.wantique.home.data.model.SavingsDto
 import kotlinx.coroutines.flow.Flow
 
@@ -16,4 +18,6 @@ interface HomeRepository {
     fun getDepositHeader(uid: String): Flow<Resource<DepositHeaderDto>>
     fun getDepositBody(uid: String): Flow<Resource<DepositBodyDto>>
     fun getShuffledSavingProduct(): Flow<Resource<SavingsDto>>
+    fun getSavingHeader(uid: String): Flow<Resource<SavingHeaderDto>>
+    fun getSavingBody(uid: String): Flow<Resource<SavingBodyDto>>
 }

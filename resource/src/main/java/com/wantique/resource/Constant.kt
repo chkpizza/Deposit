@@ -1,6 +1,8 @@
 package com.wantique.resource
 
 object Constant {
+    const val DEPOSIT = "deposit"
+    const val SAVING = "saving"
     const val USER_COLLECTION = "user"
     const val IMAGE_COLLECTION = "image"
     const val AUTH_COLLECTION = "auth"

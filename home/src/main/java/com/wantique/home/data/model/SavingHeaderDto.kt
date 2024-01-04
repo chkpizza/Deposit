@@ -1,5 +1,7 @@
 package com.wantique.home.data.model
 
+import com.wantique.home.domain.model.SavingHeader
+
 data class SavingHeaderDto(
     val uid: String? = null,
     val bankCode: Int? = null,
@@ -9,4 +11,8 @@ data class SavingHeaderDto(
     val minRate: Double? = null,
     val rateDescription: String? = null,
     val taxFree: Boolean? = null,
-)
+) {
+    fun asDomain(): SavingHeader {
+        return SavingHeader(uid!!, bankCode!!, title!!, description!!, maxRate!!, minRate!!, rateDescription!!, taxFree!!)
+    }
+}

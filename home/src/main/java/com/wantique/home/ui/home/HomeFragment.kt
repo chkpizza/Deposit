@@ -97,7 +97,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.navigateToTopProduct.collect {
                     if(it is TopDeposit) {
-                        navigator.navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(it.uid))
+                        navigator.navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(it.uid, Constant.DEPOSIT))
                     }
                 }
             }
@@ -115,7 +115,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.navigateToDeposit.collect {
                     if(it is DepositPreview) {
-                        navigator.navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(it.uid))
+                        navigator.navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(it.uid,Constant.DEPOSIT))
                     }
                 }
             }
@@ -133,7 +133,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.navigateToSaving.collect {
                     if(it is SavingPreview) {
-                        navigator.navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(it.uid))
+                        navigator.navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(it.uid, Constant.SAVING))
                     }
                 }
             }
