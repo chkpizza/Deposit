@@ -27,6 +27,9 @@
         <argument
             android:name="uid"
             app:argType="string" />
+        <argument
+            android:name="type"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/depositFragment"

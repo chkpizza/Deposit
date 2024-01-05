@@ -6,6 +6,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.wantique.base.network.NetworkException
 import com.wantique.base.network.NetworkState
 import com.wantique.base.network.NetworkStateTracker
 import kotlinx.coroutines.Dispatchers
@@ -67,7 +68,7 @@ open class BaseViewModel(
             _errorState.value = null
             emitAll(executor())
         } else {
-            emit(UiState.Error(Throwable("NETWORK_CONNECTION_ERROR")))
+            emit(UiState.Error(NetworkException()))
         }
     }
 }
